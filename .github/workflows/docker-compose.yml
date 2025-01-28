@@ -1,0 +1,26 @@
+name: Docker Compose Setup
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  setup-docker:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Generate .env File
+      run: |
+        echo "SQL_SERVER=${{ secrets.SQL_SERVER }}" >> .env
+        echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
+        echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+
+    - name: Build and Run Docker Compose
+      run: |
+        docker-compose -f docker-compose/docker-compose.yml build
+        docker-compose -f docker-compose/docker-compose.yml up -d
