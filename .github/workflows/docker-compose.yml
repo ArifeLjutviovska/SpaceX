@@ -1,34 +1,28 @@
-name: Docker Compose Setup
+name: Generate .env File for Local Use
 
 on:
-  workflow_dispatch: # Allows manual trigger of the workflow
-  push: # Runs on every push to main branch
+  push: # Automatically runs on every push to main branch
     branches:
       - main
 
 jobs:
-  setup-docker:
+  setup-env:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
 
-    - name: Set up Docker
-      uses: docker/setup-buildx-action@v2
-
-    - name: Install Docker Compose
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y docker-compose
-
     - name: Generate .env File
       run: |
-        echo "SQL_SERVER=${{ secrets.SQL_SERVER }}" >> .env
-        echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
-        echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+        echo "SQL_SERVER=${{ secrets.SQL_SERVER }}" >> docker-compose/.env
+        echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> docker-compose/.env
+        echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> docker-compose/.env
 
-    - name: Build and Run Docker Compose
+    - name: Commit the .env File (For Local Use Only)
       run: |
-        docker-compose -f docker-compose/docker-compose.yml build
-        docker-compose -f docker-compose/docker-compose.yml up -d
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
+        git add docker-compose/.env
+        git commit -m "Generate .env file for local use"
+        git push

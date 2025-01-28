@@ -3,6 +3,7 @@
 .dockerignore
 *.dbmdl
 *.jfm
+docker-compose/.env
 
 
 # Ignore Visual Studio and .NET build files
