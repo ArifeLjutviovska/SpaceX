@@ -1,8 +1,8 @@
 name: Docker Compose Setup
 
 on:
-  workflow_dispatch:
-  push:
+  workflow_dispatch: # Allows manual trigger of the workflow
+  push: # Runs on every push to main branch
     branches:
       - main
 
@@ -13,6 +13,14 @@ jobs:
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
+
+    - name: Set up Docker
+      uses: docker/setup-buildx-action@v2
+
+    - name: Install Docker Compose
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y docker-compose
 
     - name: Generate .env File
       run: |
