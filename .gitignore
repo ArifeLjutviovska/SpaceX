@@ -1,0 +1,18 @@
+*.log
+.env
+.dockerignore
+*.dbmdl
+*.jfm
+
+
+# Ignore Visual Studio and .NET build files
+bin/
+obj/
+.vs/
+*.user
+*.suo
+
+# Ignore Docker volumes
+spacex-sql-data/
+
+

@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  mssql:
+    container_name: spacex-sql
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=${DB_PASSWORD}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_USERNAME=${DB_USERNAME}
+      - SQL_SERVER=${SQL_SERVER}
+    volumes:
+      - spacex-sql-data:/var/opt/mssql
+  SpacexServer.Api:
+    container_name: spacex-server
+    image: spacex.api
+    build:
+      context: ../
+      dockerfile: SpacexServer/SpacexServer.Api/Dockerfile
+    ports:
+     - "7005:7005"
+    environment:
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_USERNAME=${DB_USERNAME}
+      - SQL_SERVER=${SQL_SERVER}
+
+volumes:
+  spacex-sql-data:
