@@ -1,5 +1,4 @@
 *.log
-.env
 .dockerignore
 *.dbmdl
 *.jfm
