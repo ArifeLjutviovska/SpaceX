@@ -16,28 +16,29 @@ jobs:
           echo "Listing files in the workspace:"
           ls -la
 
-      - name: Create .env File
+      - name: Create .env File in `env-files` Folder
         run: |
-          touch ${{ github.workspace }}/.env  # Ensure file is created
-          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> ${{ github.workspace }}/.env
-          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> ${{ github.workspace }}/.env
-          echo "SQL_SERVER=${{ secrets.SQL_SERVER }}" >> ${{ github.workspace }}/.env
+          mkdir -p ${{ github.workspace }}/env-files  # Create directory
+          touch ${{ github.workspace }}/env-files/.env
+          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> ${{ github.workspace }}/env-files/.env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> ${{ github.workspace }}/env-files/.env
+          echo "SQL_SERVER=${{ secrets.SQL_SERVER }}" >> ${{ github.workspace }}/env-files/.env
           echo ".env file created with the following content:"
-          cat ${{ github.workspace }}/.env  # Debugging: Show file content
+          cat ${{ github.workspace }}/env-files/.env  # Debugging: Show file content
 
       - name: Verify .env Exists
         run: |
-          if [ -f "${{ github.workspace }}/.env" ]; then
+          if [ -f "${{ github.workspace }}/env-files/.env" ]; then
             echo ".env file exists!"
           else
             echo "ERROR: .env file was not found!"
             exit 1  # Stop workflow if file does not exist
           fi
 
-      - name: Upload .env as Artifact
+      - name: Upload .env as Artifact in a Folder
         uses: actions/upload-artifact@v3
         with:
           name: env-file
-          path: ${{ github.workspace }}/.env
+          path: ${{ github.workspace }}/env-files/  # Upload folder instead of single file
           if-no-files-found: error  # Fail if file isn't found
           include-hidden-files: true  # Ensure hidden files like .env are included
