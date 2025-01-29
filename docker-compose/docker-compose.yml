@@ -4,6 +4,9 @@ services:
   mssql:
     container_name: spacex-sql
     image: mcr.microsoft.com/mssql/server:2022-latest
+    build:
+      context: ./
+      dockerfile: Dockerfile.mssql
     ports:
       - "1433:1433"
     environment:
@@ -14,6 +17,9 @@ services:
       - SQL_SERVER=${SQL_SERVER}
     volumes:
       - spacex-sql-data:/var/opt/mssql
+      - ./spacex-db.sql:/data/application/spacex-db.sql
+      - ./entrypoint.sh:/entrypoint.sh
+
   SpacexServer.Api:
     container_name: spacex-server
     image: spacex.api
@@ -21,11 +27,13 @@ services:
       context: ../
       dockerfile: SpacexServer/SpacexServer.Api/Dockerfile
     ports:
-     - "7005:7005"
+      - "7005:7005"
+    depends_on:
+      - mssql
     environment:
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_USERNAME=${DB_USERNAME}
       - SQL_SERVER=${SQL_SERVER}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
 
 volumes:
   spacex-sql-data:

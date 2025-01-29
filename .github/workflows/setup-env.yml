@@ -1,0 +1,24 @@
+name: Setup .env file
+
+on: [push, pull_request]
+
+jobs:
+  setup-env:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Create .env File
+        run: |
+          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+          echo "SQL_SERVER=${{ secrets.SQL_SERVER }}" >> .env
+          cat .env  # Debugging (remove this in production)
+
+      - name: Upload .env as Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: env-file
+          path: .env
