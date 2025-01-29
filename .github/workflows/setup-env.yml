@@ -18,7 +18,7 @@ jobs:
 
       - name: Create .env File
         run: |
-          touch ${{ github.workspace }}/.env  # Ensure file is created in the repo workspace
+          touch ${{ github.workspace }}/.env  # Ensure file is created
           echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> ${{ github.workspace }}/.env
           echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> ${{ github.workspace }}/.env
           echo "SQL_SERVER=${{ secrets.SQL_SERVER }}" >> ${{ github.workspace }}/.env
@@ -39,3 +39,5 @@ jobs:
         with:
           name: env-file
           path: ${{ github.workspace }}/.env
+          if-no-files-found: error  # Fail if file isn't found
+          include-hidden-files: true  # Ensure hidden files like .env are included
