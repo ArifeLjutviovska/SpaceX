@@ -18,16 +18,16 @@ jobs:
 
       - name: Create .env File
         run: |
-          touch $GITHUB_WORKSPACE/.env  # Ensure file is created
-          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> $GITHUB_WORKSPACE/.env
-          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_WORKSPACE/.env
-          echo "SQL_SERVER=${{ secrets.SQL_SERVER }}" >> $GITHUB_WORKSPACE/.env
+          touch .env  # Create the file in the default workspace
+          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+          echo "SQL_SERVER=${{ secrets.SQL_SERVER }}" >> .env
           echo ".env file created with the following content:"
-          cat $GITHUB_WORKSPACE/.env  # Debugging: Show file content
+          cat .env  # Debugging: Show file content
 
       - name: Verify .env Exists
         run: |
-          if [ -f "$GITHUB_WORKSPACE/.env" ]; then
+          if [ -f ".env" ]; then
             echo ".env file exists!"
           else
             echo "ERROR: .env file was not found!"
@@ -38,4 +38,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: env-file
-          path: $GITHUB_WORKSPACE/.env
+          path: .env  # No $GITHUB_WORKSPACE needed
