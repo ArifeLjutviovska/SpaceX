@@ -6,7 +6,7 @@
 ### **1️⃣ Clone the Repository**
 Open a terminal and run the following command:
 ```sh
-   git clone https://github.com/your-username/spacex.git
+   git clone https://github.com/ArifeLjutviovska/SpaceX.git
    ```
 
 ### **2️⃣ Navigate into the Project Directory**
