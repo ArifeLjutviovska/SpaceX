@@ -12,13 +12,13 @@ jobs:
 
       - name: Create .env File
         run: |
-          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
-          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
-          echo "SQL_SERVER=${{ secrets.SQL_SERVER }}" >> .env
-          cat .env  # Debugging (remove this in production)
+          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> $GITHUB_WORKSPACE/.env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_WORKSPACE/.env
+          echo "SQL_SERVER=${{ secrets.SQL_SERVER }}" >> $GITHUB_WORKSPACE/.env
+          cat $GITHUB_WORKSPACE/.env  # Debugging (Remove this in production)
 
       - name: Upload .env as Artifact
         uses: actions/upload-artifact@v3
         with:
           name: env-file
-          path: .env
+          path: $GITHUB_WORKSPACE/.env
