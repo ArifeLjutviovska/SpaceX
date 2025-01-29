@@ -10,12 +10,29 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
+      - name: Verify Current Directory
+        run: |
+          echo "Current working directory: $(pwd)"
+          echo "Listing files in the workspace:"
+          ls -la
+
       - name: Create .env File
         run: |
+          touch $GITHUB_WORKSPACE/.env  # Ensure file is created
           echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> $GITHUB_WORKSPACE/.env
           echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> $GITHUB_WORKSPACE/.env
           echo "SQL_SERVER=${{ secrets.SQL_SERVER }}" >> $GITHUB_WORKSPACE/.env
-          cat $GITHUB_WORKSPACE/.env  # Debugging (Remove this in production)
+          echo ".env file created with the following content:"
+          cat $GITHUB_WORKSPACE/.env  # Debugging: Show file content
+
+      - name: Verify .env Exists
+        run: |
+          if [ -f "$GITHUB_WORKSPACE/.env" ]; then
+            echo ".env file exists!"
+          else
+            echo "ERROR: .env file was not found!"
+            exit 1  # Stop workflow if file does not exist
+          fi
 
       - name: Upload .env as Artifact
         uses: actions/upload-artifact@v3
