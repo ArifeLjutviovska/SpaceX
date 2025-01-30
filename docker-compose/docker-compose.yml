@@ -34,6 +34,14 @@ services:
       - SQL_SERVER=${SQL_SERVER}
       - DB_USERNAME=${DB_USERNAME}
       - DB_PASSWORD=${DB_PASSWORD}
+    
+  SpacexServer.Client:
+    container_name: spacex-client
+    image: spaces.client
+    build:
+      context: ../SpacexApp/Spacex.Client/spacex-angular
+    ports:
+      - "4355:80"
 
 volumes:
   spacex-sql-data:
