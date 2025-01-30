@@ -14,3 +14,18 @@ obj/
 
 # Ignore Docker volumes
 spacex-sql-data/
+
+# Ignore Angular build output
+Spacex.Client/dist/
+Spacex.Client/tmp/
+
+# Ignore Angular dependencies
+Spacex.Client/node_modules/
+
+# Ignore Angular environment files (optional, if they contain secrets)
+Spacex.Client/src/environments/environment*.ts
+
+# Ignore Angular IDE-related files
+Spacex.Client/.angular/
+Spacex.Client/.vscode/
+Spacex.Client/.idea/
