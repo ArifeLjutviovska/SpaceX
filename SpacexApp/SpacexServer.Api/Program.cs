@@ -45,7 +45,7 @@ namespace SpacexServer.Api
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
 
-            builder.Services.AddTransient<ICommandHandler<AddNewUserCommand, Result>, AddNewUserCommandHandler>();
+            builder.Services.AddTransient<ICommandHandler<AddNewUserCommand, Result<string>>, AddNewUserCommandHandler>();
 
             builder.Services.AddCors();
 

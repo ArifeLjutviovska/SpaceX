@@ -17,18 +17,6 @@
             return Ok(result);
         }
 
-        protected IActionResult OkOrError(ResultCommonLogic result)
-        {
-            IActionResult errorResponse = GetErrorResponse(result);
-
-            if (errorResponse != null)
-            {
-                return errorResponse;
-            }
-
-            return Ok(result);
-        }
-
         private IActionResult GetErrorResponse(ResultCommonLogic result)
         {
             if (result.IsFailure)
