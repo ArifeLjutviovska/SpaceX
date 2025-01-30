@@ -15,7 +15,7 @@
         [HttpPost("create")]
         public async Task<IActionResult> CreateUserAsync([FromBody] CreateUserRequest request)
         {
-            Result result = await _commandDispatcher.ExecuteAsync(new AddNewUserCommand(request));
+            Result<int> result = await _commandDispatcher.ExecuteAsync(new AddNewUserCommand(request));
 
             return OkOrError(result);
         }

@@ -7,17 +7,17 @@
     using SpacexServer.Contracts.User.Requests;
     using SpacexServer.Entities.User.Domain;
 
-    public class AddNewUserCommand(CreateUserRequest userRequest) : ICommand<Result>
+    public class AddNewUserCommand(CreateUserRequest userRequest) : ICommand<Result<int>>
     {
         public CreateUserRequest UserRequest { get; set; } = userRequest;
     }
 
-    public class AddNewUserCommandHandler(IUserRepository userRepository, IUnitOfWork _unitOfWork) : ICommandHandler<AddNewUserCommand, Result>
+    public class AddNewUserCommandHandler(IUserRepository userRepository, IUnitOfWork _unitOfWork) : ICommandHandler<AddNewUserCommand, Result<int>>
     {
         private readonly IUserRepository _userRepository = userRepository;
         private readonly IUnitOfWork _unitOfWork = _unitOfWork;
 
-        public async Task<Result> ExecuteAsync(AddNewUserCommand command)
+        public async Task<Result<int>> ExecuteAsync(AddNewUserCommand command)
         {
             User user = User.Create(name: command.UserRequest.Name, createdOn: DateTime.UtcNow);
 
@@ -25,7 +25,7 @@
 
             await _unitOfWork.SaveAsync();
 
-            return Result.Ok();
+            return Result.Ok(user.Id);
         }
     }
 }

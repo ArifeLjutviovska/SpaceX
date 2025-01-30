@@ -25,7 +25,7 @@ services:
     image: spacex.api
     build:
       context: ../
-      dockerfile: SpacexServer/SpacexServer.Api/Dockerfile
+      dockerfile: SpacexApp/SpacexServer.Api/Dockerfile
     ports:
       - "7005:7005"
     depends_on:
