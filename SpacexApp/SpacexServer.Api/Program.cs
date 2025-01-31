@@ -32,9 +32,9 @@ namespace SpacexServer.Api
             var connectionStringTemplate = builder.Configuration.GetConnectionString("DefaultConnection");
 
             string connectionString = connectionStringTemplate
-                .Replace("${SQL_SERVER}", Environment.GetEnvironmentVariable("SQL_SERVER") ?? "127.0.0.1,1433")
-                .Replace("${DB_USERNAME}", Environment.GetEnvironmentVariable("DB_USERNAME") ?? "sa")
-                .Replace("${DB_PASSWORD}", Environment.GetEnvironmentVariable("DB_PASSWORD") ?? "a123456!");
+                .Replace("${SQL_SERVER}", Environment.GetEnvironmentVariable("SQL_SERVER"))
+                .Replace("${DB_USERNAME}", Environment.GetEnvironmentVariable("DB_USERNAME"))
+                .Replace("${DB_PASSWORD}", Environment.GetEnvironmentVariable("DB_PASSWORD"));
 
             builder.Services.AddDbContext<SpacexDbContext>(options =>
                 options.UseSqlServer(connectionString));
