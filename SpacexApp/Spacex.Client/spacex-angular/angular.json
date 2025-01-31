@@ -29,8 +29,13 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              }
+              },{
+                "glob": "**/*",
+                "input": "public"
+              },
+              "../icons"
             ],
+            
             "styles": [
               "src/styles.scss"
             ],
@@ -93,7 +98,8 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              }
+              },
+               "src/assets"
             ],
             "styles": [
               "src/styles.scss"

@@ -17,3 +17,10 @@ export interface Result<T> {
     Invalid = 5,
     Unauthorized = 6
   }
+
+  export interface SignUpRequest{
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+  }
