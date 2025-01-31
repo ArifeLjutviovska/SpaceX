@@ -2,15 +2,12 @@ namespace SpacexServer.Api
 {
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
-    using SpacexServer.Common;
-    using SpacexServer.Common.Interfaces;
-    using SpacexServer.Common.Models;
-    using SpacexServer.Contracts.Common.Repositories;
-    using SpacexServer.Contracts.User.Repositories;
-    using SpacexServer.Services.User.Commands;
+    using SpacexServer.Api.Commands.Users;
+    using SpacexServer.Api.Common;
+    using SpacexServer.Api.Common.Interfaces;
+    using SpacexServer.Api.Common.Models;
     using SpacexServer.Storage.Common.Context;
-    using SpacexServer.Storage.Common.UnitOfWork;
-    using SpacexServer.Storage.User.Repositories;
+    using SpacexServer.Storage.Users.Repositories;
 
     public class Program
     {
@@ -42,10 +39,9 @@ namespace SpacexServer.Api
             builder.Services.AddDbContext<SpacexDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
-            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 
-            builder.Services.AddTransient<ICommandHandler<AddNewUserCommand, Result<string>>, AddNewUserCommandHandler>();
+            builder.Services.AddTransient<ICommandHandler<SignUpUserCommand, Result>, SignUpUserCommandHandler>();
 
             builder.Services.AddCors();
 

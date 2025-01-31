@@ -24,8 +24,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\SpacexServer.Common\SpacexServer.Common.csproj" />
-	  <ProjectReference Include="..\SpacexServer.Services\SpacexServer.Services.csproj" />
 	  <ProjectReference Include="..\SpacexServer.Storage\SpacexServer.Storage.csproj" />
 	</ItemGroup>
 </Project>

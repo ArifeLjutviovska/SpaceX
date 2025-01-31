@@ -10,8 +10,4 @@
 	 <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.35" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\SpacexServer.Contracts\SpacexServer.Contracts.csproj" />
-  </ItemGroup>
-
 </Project>

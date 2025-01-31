@@ -11,14 +11,6 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Spacex.Database.SqlDb", "Sp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpacexServer.Storage", "SpacexServer.Storage\SpacexServer.Storage.csproj", "{6CAAE632-A86E-4333-8320-D1577AE373DA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpacexServer.Contracts", "SpacexServer.Contracts\SpacexServer.Contracts.csproj", "{B5C43143-4B2C-4FF9-A311-6AD930D04D56}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpacexServer.Entities", "SpacexServer.Entities\SpacexServer.Entities.csproj", "{FE8C5AFA-FE22-4EB4-964E-E7C0ECF5B613}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpacexServer.Services", "SpacexServer.Services\SpacexServer.Services.csproj", "{FEC1755B-4CE3-4E80-94BD-2CA02188BDA3}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpacexServer.Common", "SpacexServer.Common\SpacexServer.Common.csproj", "{D7913827-2352-4A1A-9937-A233C38D5939}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,22 +31,6 @@ Global
 		{6CAAE632-A86E-4333-8320-D1577AE373DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6CAAE632-A86E-4333-8320-D1577AE373DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6CAAE632-A86E-4333-8320-D1577AE373DA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B5C43143-4B2C-4FF9-A311-6AD930D04D56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B5C43143-4B2C-4FF9-A311-6AD930D04D56}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B5C43143-4B2C-4FF9-A311-6AD930D04D56}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B5C43143-4B2C-4FF9-A311-6AD930D04D56}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FE8C5AFA-FE22-4EB4-964E-E7C0ECF5B613}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FE8C5AFA-FE22-4EB4-964E-E7C0ECF5B613}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FE8C5AFA-FE22-4EB4-964E-E7C0ECF5B613}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FE8C5AFA-FE22-4EB4-964E-E7C0ECF5B613}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FEC1755B-4CE3-4E80-94BD-2CA02188BDA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FEC1755B-4CE3-4E80-94BD-2CA02188BDA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FEC1755B-4CE3-4E80-94BD-2CA02188BDA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FEC1755B-4CE3-4E80-94BD-2CA02188BDA3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D7913827-2352-4A1A-9937-A233C38D5939}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D7913827-2352-4A1A-9937-A233C38D5939}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D7913827-2352-4A1A-9937-A233C38D5939}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D7913827-2352-4A1A-9937-A233C38D5939}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

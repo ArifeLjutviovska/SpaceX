@@ -1,36 +1,37 @@
 ﻿namespace SpacexServer.Api.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
-    using SpacexServer.Common.Models;
+    using SpacexServer.Api.Common.Models;
 
     public class ExtendedApiController : ControllerBase
     {
-        protected IActionResult OkOrError<T>(Result<T> result)
+        protected IActionResult OkOrError(Result result)
         {
-            IActionResult errorResponse = GetErrorResponse(result);
-
-            if (errorResponse != null)
+            if (result.IsFailure)
             {
-                return errorResponse;
+                return new ObjectResult(result)
+                {
+                    DeclaredType = typeof(ResultCommonLogic),
+                    StatusCode = (int)result.HttpStatusCode
+                };
             }
 
             return Ok(result);
         }
 
-        private IActionResult GetErrorResponse(ResultCommonLogic result)
+        protected IActionResult OkOrError<T>(Result<T> result)
         {
             if (result.IsFailure)
             {
-                IActionResult errorResponse = new ObjectResult(result)
+                return new ObjectResult(result)
                 {
                     DeclaredType = typeof(ResultCommonLogic),
                     StatusCode = (int)result.HttpStatusCode
                 };
-
-                return errorResponse;
             }
 
-            return null;
+            return Ok(result);
         }
     }
+
 }

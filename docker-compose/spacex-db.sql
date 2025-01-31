@@ -37,20 +37,37 @@ END
 GO
 
 -- Ensure the table exists inside the schema
-IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'User' AND schema_id = SCHEMA_ID('Spacex'))
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'Users' AND schema_id = SCHEMA_ID('Spacex'))
 BEGIN
-    CREATE TABLE [Spacex].[User]
-    (
-		[Id]                 INT                NOT NULL PRIMARY KEY IDENTITY(1, 1), 
-		[CreatedOn]          DATETIME2(0)       NOT NULL,
-		[DeletedOn]          DATETIME2(0)       NULL         DEFAULT NULL,
-		[Name]               NVARCHAR(100)      NOT NULL
-    );
-    PRINT 'Table User created successfully.';
+	CREATE TABLE [Spacex].[Users]
+	(
+		[Id]                       INT IDENTITY (1, 1) PRIMARY KEY NOT NULL, 
+		[CreatedOn]                DATETIME2(0)                    NOT NULL,
+		[DeletedOn]				   DATETIME2(0)						   NULL, 
+		[Email]					   NVARCHAR(75)					   NOT NULL UNIQUE, 
+		[FirstName]				   NVARCHAR(150)			       NOT NULL,
+		[LastName]				   NVARCHAR(150)                   NOT NULL,
+		[Password]                 NVARCHAR(150)                   NOT NULL 
+	);
+    PRINT 'Table Spacex.Users created successfully.';
 END
 ELSE
 BEGIN
-    PRINT 'Table User already exists.';
+    PRINT 'Table Spacex.Users already exists.';
+END
+GO
+
+IF NOT EXISTS (
+    SELECT * FROM sys.indexes 
+    WHERE name = 'IX_Users_Email' AND object_id = OBJECT_ID('[Spacex].[Users]')
+)
+BEGIN
+    CREATE UNIQUE INDEX IX_Users_Email ON [Spacex].[Users](Email);
+    PRINT 'Index IX_Users_Email created successfully.';
+END
+ELSE
+BEGIN
+    PRINT 'Index IX_Users_Email already exists.';
 END
 GO
 

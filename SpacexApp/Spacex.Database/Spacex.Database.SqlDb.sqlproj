@@ -57,10 +57,10 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="Tables" />
-	<Folder Include="Tables\User" />
+	<Folder Include="Tables\Users" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Tables\User\User.sql" />
+    <Build Include="Tables\Users\Users.sql" />
   </ItemGroup>
   <ItemGroup>
   <None Include="Spacex.Database.SqlDb.publish.xml">

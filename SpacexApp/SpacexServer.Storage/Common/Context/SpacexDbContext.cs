@@ -2,7 +2,7 @@
 {
     using Microsoft.EntityFrameworkCore;
     using SpacexServer.Storage.Common.Configuration;
-    using SpacexServer.Storage.User.Entities;
+    using SpacexServer.Storage.Users.Entities;
 
     public class SpacexDbContext(DbContextOptions<SpacexDbContext> options) : DbContext(options), ISpacexDbContext
     {
@@ -13,7 +13,7 @@
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.ApplyConfiguration(new UserMapping());
+            modelBuilder.ApplyConfiguration(new UsersMapping());
         }
     }
 }

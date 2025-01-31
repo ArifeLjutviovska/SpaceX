@@ -3,12 +3,11 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.ChangeTracking;
     using Microsoft.EntityFrameworkCore.Infrastructure;
+    using SpacexServer.Storage.Users.Entities;
 
     public interface ISpacexDbContext : IDisposable
     {
-        DbSet<TEntity> Set<TEntity>() where TEntity : class;
-
-        EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
+        DbSet<User> Users { get; set; }
 
         ChangeTracker ChangeTracker { get; }
 
