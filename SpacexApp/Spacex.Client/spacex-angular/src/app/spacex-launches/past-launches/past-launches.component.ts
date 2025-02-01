@@ -16,6 +16,7 @@ export class PastLaunchesComponent implements OnInit {
   currentPage = 1;
   totalPages = 0;
   pageSize = 20;
+  totalItems = 0;
 
   constructor(private spacexService: SpacexService) {}
 
@@ -29,10 +30,12 @@ export class PastLaunchesComponent implements OnInit {
         this.launches = response.value.items;
         this.totalPages = response.value.totalPages || 0;
         this.currentPage = response.value.currentPage || 1;
+        this.totalItems = response.value.totalItems || 0;
       } else {
         this.launches = [];
         this.totalPages = 0;  
         this.currentPage = 1;
+        this.totalItems = 0;
       }
     });
   }

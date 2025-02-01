@@ -1,0 +1,75 @@
+.launches-container {
+    text-align: center;
+    margin: 60px auto;
+    max-width: 90%;
+}
+
+.no-launches {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh; 
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
+
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+  
+.pagination-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background: black;
+    color: white;
+    border: none;
+    cursor: pointer;
+    min-width: 100px;
+}
+
+.pagination-btn:disabled {
+    background: #ccc;
+    color: #666;
+    cursor: not-allowed;
+}
+
+.launch-list {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 100px;
+  }
+
+  .app-launch-card {
+    border-radius: 10px;
+    padding: 15px;
+    background: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc;
+  }
+
+
+.page-size-dropdown {
+    padding: 8px;
+    font-size: 16px;
+}
+
+ option:hover {
+    background: lightgray !important;
+  }
+  
+  .total-launches {
+    text-align: center;
+    font-size: 20px;
+    margin-top: 10px;
+    color: #3a3939;
+    font-family:'Times New Roman', Times, serif
+  }
+  

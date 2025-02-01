@@ -5,21 +5,39 @@
     using SpacexServer.Api.Contracts.SpacexLaunches.Responses;
     using SpacexServer.Api.Contracts.SpacexLaunches.Services;
 
-    public class GetPastLaunchesQuery(int pageNumber, int pageSize) : IQuery<PagedResult<SpaceXLaunchDto>>
+    public class GetSpacexLaunchesQuery(int pageNumber, int pageSize, bool getPastLaunches, bool getLatestLaunches, bool getUpcomingLaunches) : IQuery<PagedResult<SpaceXLaunchDto>>
     {
         public int PageNumber { get; set; } = pageNumber;
         public int PageSize { get; set; } = pageSize;
+
+        public bool GetPastLaunches { get; set; } = getPastLaunches;
+
+        public bool GetLatestLaunches { get; set; } = getLatestLaunches;
+
+        public bool GetUpcomingLaunches { get; set; } = getUpcomingLaunches;
     }
 
-    public class GetPastLaunchesQueryHandler(SpaceXLaunchService launchService) : IQueryHandler<GetPastLaunchesQuery, PagedResult<SpaceXLaunchDto>>
+    public class GetSpacexLaunchesQueryHandler(SpaceXLaunchService launchService) : IQueryHandler<GetSpacexLaunchesQuery, PagedResult<SpaceXLaunchDto>>
     {
         private readonly SpaceXLaunchService _launchService = launchService;
 
-        public async Task<Result<PagedResult<SpaceXLaunchDto>>> ExecuteAsync(GetPastLaunchesQuery query)
+        public async Task<Result<PagedResult<SpaceXLaunchDto>>> ExecuteAsync(GetSpacexLaunchesQuery query)
         {
-            var launches = await _launchService.GetCachedPastLaunchesAsync();
+            List<SpaceXLaunchDto> launches = [];
 
-            var totalItems = launches.Count;
+            if (query.GetPastLaunches)
+            {
+                launches = await _launchService.GetCachedPastLaunchesAsync();
+            }else if (query.GetLatestLaunches)
+            {
+                launches = await _launchService.GetCachedLatestLaunchesAsync();
+            }
+            else
+            {
+                launches = await _launchService.GetCachedUpcomingLaunchesAsync();
+            }         
+
+            int totalItems = launches?.Count ?? 0;
             if (totalItems == 0)
             {
                 return Result.Ok(new PagedResult<SpaceXLaunchDto>
@@ -32,7 +50,7 @@
             }
 
             var totalPages = (int)Math.Ceiling((double)totalItems / query.PageSize);
-            var pagedLaunches = launches
+            var pagedLaunches = launches!
                 .OrderByDescending(l => l.DateUtc)
                 .Skip((query.PageNumber - 1) * query.PageSize)
                 .Take(query.PageSize)

@@ -23,6 +23,10 @@
       </select>
     </div>
 
+    <div class="total-launches">
+        <strong>Total: {{ totalItems }}</strong>
+      </div>
+
     <div *ngIf="launches.length === 0" class="no-launches">
       There are no past launches available.
     </div>

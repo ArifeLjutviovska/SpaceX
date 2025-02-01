@@ -59,7 +59,7 @@ namespace SpacexServer.Api
             builder.Services.AddTransient<ICommandHandler<LoginUserCommand, Result<LoginUserResponse>>, LoginUserCommandHandler>();
             builder.Services.AddTransient<ICommandHandler<RefreshTokenCommand, Result<LoginUserResponse>>, RefreshTokenCommandHandler>();
 
-            builder.Services.AddTransient<IQueryHandler<GetPastLaunchesQuery, PagedResult<SpaceXLaunchDto>>, GetPastLaunchesQueryHandler>();
+            builder.Services.AddTransient<IQueryHandler<GetSpacexLaunchesQuery, PagedResult<SpaceXLaunchDto>>, GetSpacexLaunchesQueryHandler>();
 
             var jwtSettings = builder.Configuration.GetSection("JwtSettings");
             var jwtSecret = Environment.GetEnvironmentVariable("JWT_SECRET") ?? builder.Configuration["JwtSettings:Secret"];

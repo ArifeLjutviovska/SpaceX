@@ -16,4 +16,16 @@ export class SpacexService {
       `${this.baseApiUrl}/past-launches?pageNumber=${pageNumber}&pageSize=${pageSize}`
     );
   }
+
+  getLatestLaunches(pageNumber: number, pageSize: number): Observable<Result<PagedResult<SpaceXLaunchDto>>> {
+    return this.httpService.get<Result<PagedResult<SpaceXLaunchDto>>>(
+      `${this.baseApiUrl}/latest-launches?pageNumber=${pageNumber}&pageSize=${pageSize}`
+    );
+  }
+
+  getUpcomingLaunches(pageNumber: number, pageSize: number): Observable<Result<PagedResult<SpaceXLaunchDto>>> {
+    return this.httpService.get<Result<PagedResult<SpaceXLaunchDto>>>(
+      `${this.baseApiUrl}/upcoming-launches?pageNumber=${pageNumber}&pageSize=${pageSize}`
+    );
+  }
 }

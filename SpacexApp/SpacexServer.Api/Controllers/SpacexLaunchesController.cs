@@ -25,7 +25,45 @@
         [SwaggerResponse((int)HttpStatusCode.Unauthorized, "Unauthorized request.")]
         public async Task<IActionResult> GetPastLaunchesAsync([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 20)
         {
-            var result = await _queryDispatcher.ExecuteAsync(new GetPastLaunchesQuery(pageNumber, pageSize));
+            var result = await _queryDispatcher.ExecuteAsync(new GetSpacexLaunchesQuery(pageNumber: pageNumber, 
+                                                                                        pageSize: pageSize,
+                                                                                        getPastLaunches: true,
+                                                                                        getLatestLaunches: false,
+                                                                                        getUpcomingLaunches: false));
+            return OkOrError(result);
+        }
+
+        /// <summary>
+        /// Retrieves a paginated list of latest SpaceX launches.
+        /// </summary>
+        [HttpGet("latest-launches")]
+        [SwaggerOperation(Summary = "Gets latest SpaceX launches with pagination.")]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Successful response.", typeof(Result<PagedResult<SpaceXLaunchDto>>))]
+        [SwaggerResponse((int)HttpStatusCode.Unauthorized, "Unauthorized request.")]
+        public async Task<IActionResult> GetLatestLaunchesAsync([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 20)
+        {
+            var result = await _queryDispatcher.ExecuteAsync(new GetSpacexLaunchesQuery(pageNumber: pageNumber,
+                                                                                        pageSize: pageSize,
+                                                                                        getPastLaunches: false,
+                                                                                        getLatestLaunches: true,
+                                                                                        getUpcomingLaunches: false));
+            return OkOrError(result);
+        }
+
+        /// <summary>
+        /// Retrieves a paginated list of upcoming SpaceX launches.
+        /// </summary>
+        [HttpGet("upcoming-launches")]
+        [SwaggerOperation(Summary = "Gets upcoming SpaceX launches with pagination.")]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Successful response.", typeof(Result<PagedResult<SpaceXLaunchDto>>))]
+        [SwaggerResponse((int)HttpStatusCode.Unauthorized, "Unauthorized request.")]
+        public async Task<IActionResult> GetUpcomingLaunchesAsync([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 20)
+        {
+            var result = await _queryDispatcher.ExecuteAsync(new GetSpacexLaunchesQuery(pageNumber: pageNumber,
+                                                                                        pageSize: pageSize,
+                                                                                        getPastLaunches: false,
+                                                                                        getLatestLaunches: false,
+                                                                                        getUpcomingLaunches: true));
             return OkOrError(result);
         }
     }
