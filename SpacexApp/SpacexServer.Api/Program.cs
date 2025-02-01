@@ -1,13 +1,19 @@
 namespace SpacexServer.Api
 {
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
+    using Microsoft.IdentityModel.Tokens;
+    using SpacexServer.Api.Commands.RefreshTokens;
     using SpacexServer.Api.Commands.Users;
     using SpacexServer.Api.Common;
     using SpacexServer.Api.Common.Interfaces;
     using SpacexServer.Api.Common.Models;
+    using SpacexServer.Api.Contracts.Users.Responses;
     using SpacexServer.Storage.Common.Context;
+    using SpacexServer.Storage.RefreshTokens.Repositories;
     using SpacexServer.Storage.Users.Repositories;
+    using System.Text;
 
     public class Program
     {
@@ -40,8 +46,36 @@ namespace SpacexServer.Api
                 options.UseSqlServer(connectionString));
 
             builder.Services.AddScoped<IUsersRepository, UsersRepository>();
+            builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
             builder.Services.AddTransient<ICommandHandler<SignUpUserCommand, Result>, SignUpUserCommandHandler>();
+            builder.Services.AddTransient<ICommandHandler<LoginUserCommand, Result<LoginUserResponse>>, LoginUserCommandHandler>();
+            builder.Services.AddTransient<ICommandHandler<RefreshTokenCommand, Result<LoginUserResponse>>, RefreshTokenCommandHandler>();
+
+            var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+            var jwtSecret = Environment.GetEnvironmentVariable("JWT_SECRET")
+                ?? builder.Configuration["JwtSettings:Secret"];
+
+            var key = Encoding.UTF8.GetBytes(jwtSecret);
+
+
+            builder.Services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = jwtSettings["Issuer"],
+                        ValidAudience = jwtSettings["Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(key)
+                    };
+                });
+
+            builder.Services.AddAuthorization();
 
             builder.Services.AddCors();
 
@@ -58,7 +92,9 @@ namespace SpacexServer.Api
                 app.UseSwaggerUI();
             }
 
+            app.UseAuthentication();
             app.UseAuthorization();
+
 
 
             app.MapControllers();

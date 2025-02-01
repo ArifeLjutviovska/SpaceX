@@ -13,6 +13,11 @@
             return await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
 
+        public async Task<User?> GetByIdAsync(int id) 
+        {
+            return await _dbContext.Users.FindAsync(id);
+        }
+
         public async Task InsertAsync(User user)
         {
             await _dbContext.Users.AddAsync(user);

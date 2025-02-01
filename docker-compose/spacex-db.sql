@@ -71,5 +71,38 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'RefreshTokens' AND schema_id = SCHEMA_ID('Spacex'))
+BEGIN
+    CREATE TABLE [Spacex].[RefreshTokens] (
+        [Id]            INT IDENTITY (1,1) PRIMARY KEY NOT NULL,
+        [UserFk]        INT NOT NULL,
+        [Token]         NVARCHAR(255) NOT NULL UNIQUE,
+        [ExpiresAt]     DATETIME2(0) NOT NULL,
+        [CreatedAt]     DATETIME2(0) NOT NULL DEFAULT GETUTCDATE(),
+        [RevokedAt]     DATETIME2(0) NULL,
+        CONSTRAINT FK_RefreshTokens_Users FOREIGN KEY (UserFk) REFERENCES [Spacex].[Users](Id) ON DELETE CASCADE
+    );
+    PRINT 'Table Spacex.RefreshTokens created successfully.';
+END
+ELSE
+BEGIN
+    PRINT 'Table Spacex.RefreshTokens already exists.';
+END
+GO
+
+IF NOT EXISTS (
+    SELECT * FROM sys.indexes 
+    WHERE name = 'IX_RefreshTokens_UserFk' AND object_id = OBJECT_ID('[Spacex].[RefreshTokens]')
+)
+BEGIN
+    CREATE INDEX IX_RefreshTokens_UserFk ON [Spacex].[RefreshTokens](UserFk);
+    PRINT 'Index IX_RefreshTokens_UserFk created successfully.';
+END
+ELSE
+BEGIN
+    PRINT 'Index IX_RefreshTokens_UserFk already exists.';
+END
+GO
+
 PRINT N'Update complete.';
 GO

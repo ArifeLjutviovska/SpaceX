@@ -8,7 +8,7 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Verify Current Directory
         run: |
@@ -23,6 +23,7 @@ jobs:
           echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> ${{ github.workspace }}/env-files/.env
           echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> ${{ github.workspace }}/env-files/.env
           echo "SQL_SERVER=${{ secrets.SQL_SERVER }}" >> ${{ github.workspace }}/env-files/.env
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> ${{ github.workspace }}/env-files/.env
           echo ".env file created with the following content:"
           cat ${{ github.workspace }}/env-files/.env  # Debugging: Show file content
 
@@ -36,9 +37,9 @@ jobs:
           fi
 
       - name: Upload .env as Artifact in a Folder
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: env-file
-          path: ${{ github.workspace }}/env-files/  # Upload folder instead of single file
-          if-no-files-found: error  # Fail if file isn't found
-          include-hidden-files: true  # Ensure hidden files like .env are included
+          path: ${{ github.workspace }}/env-files/
+          if-no-files-found: error
+          include-hidden-files: true

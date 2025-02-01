@@ -34,7 +34,8 @@ services:
       - SQL_SERVER=${SQL_SERVER}
       - DB_USERNAME=${DB_USERNAME}
       - DB_PASSWORD=${DB_PASSWORD}
-    
+      - JWT_SECRET=${JWT_SECRET}
+      
   SpacexServer.Client:
     container_name: spacex-client
     image: spaces.client

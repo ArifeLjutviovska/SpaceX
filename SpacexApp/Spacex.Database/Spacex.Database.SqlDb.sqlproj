@@ -58,9 +58,11 @@
     <Folder Include="Properties" />
     <Folder Include="Tables" />
 	<Folder Include="Tables\Users" />
+	<Folder Include="Tables\RefreshTokens" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Users\Users.sql" />
+	<Build Include="Tables\RefreshTokens\RefreshTokens.sql" />
   </ItemGroup>
   <ItemGroup>
   <None Include="Spacex.Database.SqlDb.publish.xml">
