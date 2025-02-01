@@ -85,6 +85,7 @@
   display: block;
 }
 
+
 .signup-button {
   display: flex;
   justify-content: center;
@@ -117,6 +118,14 @@
   text-align: center;
 }
 
+.signup label {
+  color: #009579;
+  cursor: pointer;
+}
+
+.signup label:hover {
+  text-decoration: underline;
+}
 
 @media (max-width: 600px) {
   .container {
@@ -145,13 +154,31 @@
 .form-class{
   width: 90%;;
 }
-.signup a.signup-link {
-  color: #009579 !important;
-  font-weight: 500;
-  cursor: pointer;
-  text-decoration: none;
-}
 
-.signup a.signup-link:hover {
-  text-decoration: underline;
-}
+.login-link {
+    color: #009579;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  
+  .login-link:hover {
+    text-decoration: underline;
+  }
+  .forgot-password {
+    text-align: right;
+    margin-bottom: 20px;
+    margin-top: -10px;
+  }
+  
+  .forgot-password-link {
+    color: #009579;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  
+  .forgot-password-link:hover {
+    text-decoration: underline;
+  }
+  

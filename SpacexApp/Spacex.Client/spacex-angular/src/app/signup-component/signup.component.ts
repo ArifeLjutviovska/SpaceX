@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl, ReactiveFormsModule } from '@angular/forms';
-import { Result, SignUpRequest } from '../models/spacex.models';
-import { SpacexService } from '../services/spacex.services';
+import { LoginResponse, Result, SignUpRequest } from '../models/spacex.models';
+import { AuthService  } from '../services/auth.services';
 import { catchError, mergeMap, of } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   selector: 'app-signup',
   standalone: true,
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss'],
+  styleUrl: './signup.component.scss',
   imports: [CommonModule, ReactiveFormsModule]
 })
 export class SignupComponent {
@@ -19,7 +19,7 @@ export class SignupComponent {
   showPassword = false;
   showConfirmPassword = false;
 
-  constructor(private fb: FormBuilder, private spacexService: SpacexService, private toastr: ToastrService, private router: Router) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private toastr: ToastrService, private router: Router) {
     this.signupForm = this.fb.nonNullable.group({
       firstName: ['', [Validators.required, Validators.maxLength(100)]],
       lastName: ['', [Validators.required, Validators.maxLength(100)]],
@@ -40,6 +40,10 @@ export class SignupComponent {
       const confirmPassword = control.get('confirmPassword')?.value;
       return password === confirmPassword ? null : { mismatch: true };
     };
+  }
+
+  onLoginClicked(){
+    this.router.navigate(["/login"]);
   }
 
   togglePassword() {
@@ -63,29 +67,41 @@ export class SignupComponent {
       this.signupForm.markAllAsTouched();
       return;
     }
-
+  
     const request: SignUpRequest = {
       firstName: this.signupForm.controls['firstName'].value,
       lastName: this.signupForm.controls['lastName'].value,
       email: this.signupForm.controls['email'].value,
       password: this.signupForm.controls['password'].value
-    }
-
-    this.spacexService.signUp(request).pipe(
+    };
+  
+    this.authService.signUp(request).pipe(
       mergeMap((result: Result<void>) => {
         if (result.isSuccess) {
           this.showSuccess('Signup successful! Redirecting...');
-          setTimeout(() => this.router.navigate(['/dashboard']), 2000); 
+  
+          return this.authService.login({
+            email: request.email,
+            password: request.password
+          }).pipe(
+            mergeMap((loginResult: Result<LoginResponse>) => {
+              if (loginResult.isSuccess) {
+                setTimeout(() => this.router.navigate(['/dashboard']), 2000); 
+              } else {
+                throw new Error(loginResult?.message || 'Login failed.');
+              }
+              return of(null);
+            })
+          );
         } else {
-          throw new Error(result.message || 'Signup failed.');
+          throw new Error(result?.message || 'Signup failed.');
         }
-        return of(null);
       }),
       catchError((error) => {
-        this.showError(error.error.message);
-        this.signupForm.reset();
+        this.showError(error?.error?.message ?? error?.message ?? "Signup failed.");
         return of(null);
       })
     ).subscribe();
   }
+  
 }

@@ -1,23 +1,23 @@
-import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
-
-import { appRoutes } from './app.routes';
-import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { provideHttpClient } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { JwtInterceptor } from './interceptors/jwt.interceptor';
+import { appRoutes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }), 
     provideRouter(appRoutes),
-     provideClientHydration(withEventReplay()), 
-     provideHttpClient(),
-     importProvidersFrom(BrowserAnimationsModule, ToastrModule.forRoot({
-      positionClass: 'toast-top-right', 
-      timeOut: 5000, 
-      closeButton: false,
-      progressBar: true
-    }))
-    ]
+    provideHttpClient(withInterceptors([JwtInterceptor])), 
+    importProvidersFrom(
+      BrowserAnimationsModule, 
+      ToastrModule.forRoot({
+        positionClass: 'toast-top-right', 
+        timeOut: 4000, 
+        closeButton: false,
+        progressBar: true
+      })
+    )
+  ]
 };

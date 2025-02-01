@@ -27,12 +27,17 @@ html body{
     }
   }
   
- 
-  .toast-message {
-    font-size: 1rem !important;
-    padding: 10px !important;
+  .toast-title {
+    font-weight: bold;
+    display: inline-block;
+    margin-right: 10px;
   }
-
+  
+  .toast-message {
+    display: inline-block;
+    font-size: 1rem !important;
+  }
+  
 .toast-error {
   background-color: rgb(238, 190, 198) !important;
   color: rgb(160, 9, 9) !important;       
@@ -55,4 +60,15 @@ html body{
 
 .toast-close-button {
  display: none !important;
+}
+
+.signup-link {
+  color: #009579 !important;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.signup-link:hover {
+  text-decoration: underline;
 }

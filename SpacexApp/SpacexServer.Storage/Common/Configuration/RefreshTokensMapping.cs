@@ -13,7 +13,7 @@
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).HasColumnName("Id").ValueGeneratedOnAdd();
 
-            builder.Property(x => x.UserFk).HasColumnName("UserId").IsRequired();
+            builder.Property(x => x.UserFk).HasColumnName("UserFk").IsRequired();
             builder.Property(x => x.Token).HasColumnName("Token").HasColumnType("NVARCHAR").HasMaxLength(255).IsRequired();
             builder.Property(x => x.ExpiresAt).HasColumnName("ExpiresAt").HasColumnType("DATETIME2(0)").IsRequired();
             builder.Property(x => x.CreatedAt).HasColumnName("CreatedAt").HasColumnType("DATETIME2(0)").IsRequired().HasDefaultValueSql("GETUTCDATE()");

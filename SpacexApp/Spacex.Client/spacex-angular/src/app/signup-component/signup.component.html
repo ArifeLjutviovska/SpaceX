@@ -2,7 +2,7 @@
   <div class="registration form">
     <header>Signup</header>
 
-    <form class="form-class" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <form class="form-class" [formGroup]="signupForm">
       <div>
         <small class="error" *ngIf="signupForm.controls['firstName'].invalid && signupForm.controls['firstName'].touched">
           First name is required (Max 100 chars).
@@ -54,7 +54,7 @@
 
     <div class="signup">
       <span>Already have an account?
-        <label for="check">Login</label>
+        <a (click)="onLoginClicked()" class="signup-link">Login</a>
       </span>
     </div>
   </div>

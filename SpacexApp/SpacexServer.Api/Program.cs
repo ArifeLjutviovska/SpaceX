@@ -9,6 +9,7 @@ namespace SpacexServer.Api
     using SpacexServer.Api.Common;
     using SpacexServer.Api.Common.Interfaces;
     using SpacexServer.Api.Common.Models;
+    using SpacexServer.Api.Common.Security;
     using SpacexServer.Api.Contracts.Users.Responses;
     using SpacexServer.Storage.Common.Context;
     using SpacexServer.Storage.RefreshTokens.Repositories;
@@ -53,11 +54,11 @@ namespace SpacexServer.Api
             builder.Services.AddTransient<ICommandHandler<RefreshTokenCommand, Result<LoginUserResponse>>, RefreshTokenCommandHandler>();
 
             var jwtSettings = builder.Configuration.GetSection("JwtSettings");
-            var jwtSecret = Environment.GetEnvironmentVariable("JWT_SECRET")
-                ?? builder.Configuration["JwtSettings:Secret"];
+            var jwtSecret = Environment.GetEnvironmentVariable("JWT_SECRET") ?? builder.Configuration["JwtSettings:Secret"];
+
+            builder.Configuration["JwtSettings:Secret"] = jwtSecret;
 
             var key = Encoding.UTF8.GetBytes(jwtSecret);
-
 
             builder.Services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -71,11 +72,13 @@ namespace SpacexServer.Api
                         ValidateIssuerSigningKey = true,
                         ValidIssuer = jwtSettings["Issuer"],
                         ValidAudience = jwtSettings["Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(key)
+                        ClockSkew = TimeSpan.Zero,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
                     };
                 });
 
             builder.Services.AddAuthorization();
+            builder.Services.AddScoped<JwtService>();
 
             builder.Services.AddCors();
 
