@@ -41,7 +41,13 @@ services:
     build:
       context: ../SpacexApp/Spacex.Client/spacex-angular
     ports:
-      - "4355:80"
+      - "4300:4300"
+    volumes:
+      - ../SpacexApp/Spacex.Client/spacex-angular:/app
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    command: ["npm", "run", "start"]
 
 volumes:
   spacex-sql-data:

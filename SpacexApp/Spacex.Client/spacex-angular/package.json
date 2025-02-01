@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "ng serve --host 0.0.0.0 --port 4300",
+    "build": "ng build --configuration=production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:spacex-angular": "node dist/spacex-angular/server/server.mjs"
@@ -24,7 +24,6 @@
     "@angular/router": "^19.1.0",
     "@angular/ssr": "^19.1.4",
     "@fortawesome/fontawesome-free": "^6.7.2",
-    "bootstrap": "^5.3.3",
     "express": "^4.18.2",
     "font-awesome": "^4.7.0",
     "ngx-toastr": "^19.0.0",

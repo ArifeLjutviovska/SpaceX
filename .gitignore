@@ -3,6 +3,7 @@
 *.dbmdl
 *.jfm
 .env
+dist/
 
 
 # Ignore Visual Studio and .NET build files

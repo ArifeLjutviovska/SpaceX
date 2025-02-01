@@ -2,7 +2,7 @@
   <div class="registration form">
     <header>Signup</header>
 
-    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <form class="form-class" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
       <div>
         <small class="error" *ngIf="signupForm.controls['firstName'].invalid && signupForm.controls['firstName'].touched">
           First name is required (Max 100 chars).
