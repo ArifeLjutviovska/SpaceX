@@ -1,0 +1,32 @@
+.launch-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    border: 2px solid rgb(199, 196, 196);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  .launch-details {
+    flex: 1;
+    color: black;
+    text-align: left;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+  }
+  
+  .launch-image img {
+    width: 120px;
+    border-radius: 8px;
+  }
+  
+  .success {
+    color: green;
+    font-weight: 900;
+  }
+  
+  .failed {
+    color: red;
+    font-weight: 900;
+  }

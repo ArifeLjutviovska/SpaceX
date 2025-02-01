@@ -1,0 +1,21 @@
+<div class="launch-card">
+    <div class="launch-details">
+      <h3>{{ launch.name }}</h3>
+      <p><strong>Date:</strong> {{ launch.dateUtc | date:'medium' }}</p>
+      <p *ngIf="launch.details"><strong>Details:</strong> {{ launch.details }}</p>
+      <p *ngIf="launch.success !== null">
+        <strong>Status:</strong> 
+        <span [class.success]="launch.success" [class.failed]="!launch.success">
+          {{ launch.success ? 'Success' : 'Failed' }}
+        </span>
+      </p>
+      <p *ngIf="launch.launchpad"><strong>Launchpad:</strong> {{ launch.launchpad }}</p>
+      <p *ngIf="launch.wikipediaUrl"><a [href]="launch.wikipediaUrl" target="_blank">Wikipedia</a></p>
+      <p *ngIf="launch.articleUrl"><a [href]="launch.articleUrl" target="_blank">Read More</a></p>
+    </div>
+    
+    <div class="launch-image" *ngIf="launch.patchImage">
+      <img [src]="launch.patchImage" alt="Launch Patch">
+    </div>
+  </div>
+  

@@ -1,1 +1,33 @@
-<p>past-launches works!</p>
+<div class="launches-container">
+    <h2 class="header">Past Launches</h2>
+
+    <div class="pagination">
+      <button 
+        (click)="prevPage()" 
+        [disabled]="currentPage === 1 || totalPages === 0"
+        class="pagination-btn">
+        Previous
+      </button>
+
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+
+      <button 
+        (click)="nextPage()" 
+        [disabled]="currentPage === totalPages || launches.length === 0"
+        class="pagination-btn">
+        Next
+      </button>
+
+      <select [(ngModel)]="pageSize" (change)="loadLaunches()" class="page-size-dropdown">
+        <option *ngFor="let size of [20, 50, 100]" [value]="size">{{ size }}</option>
+      </select>
+    </div>
+
+    <div *ngIf="launches.length === 0" class="no-launches">
+      There are no past launches available.
+    </div>
+
+    <div class="launch-list" *ngIf="launches.length > 0">
+      <app-launch-card *ngFor="let launch of launches" [launch]="launch"></app-launch-card>
+    </div>
+</div>

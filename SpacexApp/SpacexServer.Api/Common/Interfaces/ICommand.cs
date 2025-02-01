@@ -5,5 +5,4 @@
     public interface ICommand<TResult> where TResult : ResultCommonLogic
     {
     }
-
 }

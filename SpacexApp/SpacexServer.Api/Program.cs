@@ -5,11 +5,14 @@ namespace SpacexServer.Api
     using Microsoft.Extensions.Configuration;
     using Microsoft.IdentityModel.Tokens;
     using SpacexServer.Api.Commands.RefreshTokens;
+    using SpacexServer.Api.Commands.SpacexLaunches;
     using SpacexServer.Api.Commands.Users;
     using SpacexServer.Api.Common;
     using SpacexServer.Api.Common.Interfaces;
     using SpacexServer.Api.Common.Models;
     using SpacexServer.Api.Common.Security;
+    using SpacexServer.Api.Contracts.SpacexLaunches.Responses;
+    using SpacexServer.Api.Contracts.SpacexLaunches.Services;
     using SpacexServer.Api.Contracts.Users.Responses;
     using SpacexServer.Storage.Common.Context;
     using SpacexServer.Storage.RefreshTokens.Repositories;
@@ -33,6 +36,9 @@ namespace SpacexServer.Api
             builder.Services.AddSwaggerGen();
 
             builder.Services.AddTransient<ICommandDispatcher, CommandDispatcher>();
+            builder.Services.AddTransient<IQueryDispatcher, QueryDispatcher>();
+            builder.Services.AddHttpClient<SpaceXLaunchService>();
+            builder.Services.AddMemoryCache();
 
             builder.Services.AddScoped<ISpacexDbContext, SpacexDbContext>();
 
@@ -52,6 +58,8 @@ namespace SpacexServer.Api
             builder.Services.AddTransient<ICommandHandler<SignUpUserCommand, Result>, SignUpUserCommandHandler>();
             builder.Services.AddTransient<ICommandHandler<LoginUserCommand, Result<LoginUserResponse>>, LoginUserCommandHandler>();
             builder.Services.AddTransient<ICommandHandler<RefreshTokenCommand, Result<LoginUserResponse>>, RefreshTokenCommandHandler>();
+
+            builder.Services.AddTransient<IQueryHandler<GetPastLaunchesQuery, PagedResult<SpaceXLaunchDto>>, GetPastLaunchesQueryHandler>();
 
             var jwtSettings = builder.Configuration.GetSection("JwtSettings");
             var jwtSecret = Environment.GetEnvironmentVariable("JWT_SECRET") ?? builder.Configuration["JwtSettings:Secret"];

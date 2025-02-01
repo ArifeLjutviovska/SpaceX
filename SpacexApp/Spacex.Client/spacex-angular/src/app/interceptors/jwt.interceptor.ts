@@ -1,13 +1,15 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { AuthService } from '../services/auth.services';
+import { AuthService } from '../services/auth.service';
 import { HttpRequest, HttpHandlerFn, HttpEvent, HttpErrorResponse } from '@angular/common/http';
 import { Observable, catchError, switchMap, throwError } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 export const JwtInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: HttpHandlerFn): Observable<HttpEvent<any>> => {
   const authService = inject(AuthService);
   const toastr = inject(ToastrService);
+  const router = inject(Router);
   let isRefreshing = false;
 
   const token = authService.getAccessToken();
@@ -37,12 +39,14 @@ export const JwtInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: H
             } else {
               authService.logout();
               toastr.error('Session expired. Please log in again.', 'Error');
+              router.navigate(['/login']); 
               return throwError(() => new Error("Session expired. Please log in again."));
             }
           }),
           catchError(() => {
             authService.logout();
             toastr.error('Session expired. Please log in again.', 'Error');
+            router.navigate(['/login']);  
             return throwError(() => new Error("Session expired. Please log in again."));
           })
         );

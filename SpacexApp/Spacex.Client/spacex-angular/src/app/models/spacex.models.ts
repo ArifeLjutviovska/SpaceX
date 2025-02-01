@@ -34,3 +34,25 @@ export interface Result<T> {
     accessToken: string;
     refreshToken: string;
   }
+
+  export interface SpaceXLaunchDto {
+    id: string;
+    name: string;
+    dateUtc: string;
+    rocketId?: string;
+    success?: boolean;
+    details?: string;
+    patchImage?: string;
+    webcastUrl?: string;
+    wikipediaUrl?: string;
+    articleUrl?: string;
+    launchpad?: string;
+  }
+  
+  
+  export interface PagedResult<T> {
+    items: T[];
+    totalItems: number;
+    totalPages: number;
+    currentPage: number;
+  }
