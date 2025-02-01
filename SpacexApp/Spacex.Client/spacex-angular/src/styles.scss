@@ -1,9 +1,53 @@
+@import url(../node_modules/ngx-toastr/toastr.css);
 
-html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+html body{
+    background-color: rgb(243, 243, 235);
+  }
+
+  @media (min-width: 1024px) {
+    .toast-container {
+      max-width: 600px !important;
+    }
   }
   
+  @media (max-width: 1023px) {
+    .toast-container {
+      max-width: 90% !important;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .toast-container {
+      max-width: 95% !important; 
+    }
+  }
+  
+ 
+  .toast-message {
+    font-size: 1rem !important;
+    padding: 10px !important;
+  }
+
+.toast-error {
+  background-color: rgb(238, 190, 198) !important;
+  color: rgb(160, 9, 9) !important;       
+  font-family: 'Times New Roman', Times, serif;       
+  font-weight: bold;
+  border: solid rgb(211, 158, 167);
+  border-radius: 7px;
+}
+
+
+.toast-success {
+  background-color: rgb(185, 236, 185) !important;
+  color: darkgreen !important;            
+  font-weight: bold;
+  font-family: 'Times New Roman', Times, serif;
+  border-radius: 7px;
+  border:solid rgb(185, 236, 185);
+}
+
+
+.toast-close-button {
+ display: none !important;
+}

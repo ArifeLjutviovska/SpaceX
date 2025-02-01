@@ -67,14 +67,14 @@
                 return Result.Invalid("Password is required.");
             }
 
-            if (Request.FirstName.Length > 150)
+            if (Request.FirstName.Length > 100)
             {
-                return Result.Invalid("First name cannot be longer than 150 characters.");
+                return Result.Invalid("First name cannot be longer than 100 characters.");
             }
 
-            if (Request.LastName.Length > 150)
+            if (Request.LastName.Length > 100)
             {
-                return Result.Invalid("Last name cannot be longer than 150 characters.");
+                return Result.Invalid("Last name cannot be longer than 100 characters.");
             }
 
             if (Request.Email.Length > 75)
@@ -124,8 +124,9 @@
 
         private static bool IsValidPassword(string password)
         {
-            var passwordPattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$";
+            var passwordPattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.@$!%*?&])[A-Za-z\d.@$!%*?&]{8,}$";
             return Regex.IsMatch(password, passwordPattern);
         }
+
     }
 }

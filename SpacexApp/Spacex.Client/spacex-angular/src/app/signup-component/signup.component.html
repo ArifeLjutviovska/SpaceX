@@ -1,20 +1,61 @@
-<div class="background">
 <div class="container">
-    <div class="registration form">
-      <header>Signup</header>
-      <form action="#">
-        <input type="text" placeholder="First name">
-        <input type="text" placeholder="Last Name">
-        <input type="text" placeholder="Email">
-        <input type="password" placeholder="Password">
-        <input type="password" placeholder="Confirm your password">
-        <input type="button" class="button" value="Signup">
-      </form>
-      <div class="signup">
-        <span class="signup">Already have an account?
-         <label for="check">Login</label>
-        </span>
+  <div class="registration form">
+    <header>Signup</header>
+
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+      <div>
+        <small class="error" *ngIf="signupForm.controls['firstName'].invalid && signupForm.controls['firstName'].touched">
+          First name is required (Max 100 chars).
+        </small>
+        <input type="text" formControlName="firstName" placeholder="First Name">
       </div>
+
+      <div>
+        <small class="error" *ngIf="signupForm.controls['lastName'].invalid && signupForm.controls['lastName'].touched">
+          Last name is required (Max 100 chars).
+        </small>
+        <input type="text" formControlName="lastName" placeholder="Last Name">
+      </div>
+
+      <div>
+        <small class="error" *ngIf="signupForm.controls['email'].invalid && signupForm.controls['email'].touched">
+          Enter a valid email.
+        </small>
+        <input type="email" formControlName="email" placeholder="Email">
+      </div>
+
+      <div class="password-container">
+        <small class="error" *ngIf="signupForm.controls['password'].invalid && signupForm.controls['password'].touched">
+          Password must have 8+ chars, 1 uppercase, 1 lowercase, 1 number, 1 special char.
+        </small>
+        
+        <div class="password-wrapper">
+          <input [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="Password">
+          <i class="fa" type="button" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'" (click)="togglePassword()"></i>
+        </div>
+      </div>
+      
+      <div class="password-container">
+        <small class="error" *ngIf="signupForm.errors?.['mismatch'] && signupForm.controls['confirmPassword'].touched">
+          Passwords do not match.
+        </small>
+        
+        <div class="password-wrapper">
+          <input [type]="showConfirmPassword ? 'text' : 'password'" formControlName="confirmPassword" placeholder="Confirm Password">
+          <i class="fa" type="button" [ngClass]="showConfirmPassword ? 'fa-eye-slash' : 'fa-eye'" (click)="toggleConfirmPassword()"></i>
+        </div>
+      </div>
+      
+
+      <div class="signup-button">
+        <input type="button" class="button"   (click)="onSubmit()" value="Signup">
+      </div>
+    </form>
+
+    <div class="signup">
+      <span>Already have an account?
+        <label for="check">Login</label>
+      </span>
     </div>
   </div>
-  </div>
+</div>

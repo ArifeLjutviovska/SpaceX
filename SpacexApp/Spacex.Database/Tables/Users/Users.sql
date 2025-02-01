@@ -4,9 +4,9 @@
     [CreatedOn]                DATETIME2(0)                    NOT NULL,
     [DeletedOn]				   DATETIME2(0)						   NULL, 
     [Email]					   NVARCHAR(75)					   NOT NULL UNIQUE, 
-    [FirstName]				   NVARCHAR(150)			       NOT NULL,
-    [LastName]				   NVARCHAR(150)                   NOT NULL,
-    [Password]                 NVARCHAR(150)                   NOT NULL 
+    [FirstName]				   NVARCHAR(100)			       NOT NULL,
+    [LastName]				   NVARCHAR(100)                   NOT NULL,
+    [Password]                 NVARCHAR(50)                   NOT NULL 
 );
 
 GO
