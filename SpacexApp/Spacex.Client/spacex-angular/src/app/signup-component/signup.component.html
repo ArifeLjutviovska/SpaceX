@@ -31,7 +31,7 @@
         
         <div class="password-wrapper">
           <input [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="Password">
-          <i class="fa" type="button" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'" (click)="togglePassword()"></i>
+          <i class="fa" type="button" [ngClass]="showPassword ? 'fa-eye' : 'fa-eye-slash'" (click)="togglePassword()"></i>
         </div>
       </div>
       
@@ -42,7 +42,7 @@
         
         <div class="password-wrapper">
           <input [type]="showConfirmPassword ? 'text' : 'password'" formControlName="confirmPassword" placeholder="Confirm Password">
-          <i class="fa" type="button" [ngClass]="showConfirmPassword ? 'fa-eye-slash' : 'fa-eye'" (click)="toggleConfirmPassword()"></i>
+          <i class="fa" type="button" [ngClass]="showConfirmPassword ? 'fa-eye' : 'fa-eye-slash'" (click)="toggleConfirmPassword()"></i>
         </div>
       </div>
       
