@@ -1,0 +1,36 @@
+<nav class="sidebar" [class.collapsed]="isCollapsed">
+    <div class="top-section">
+      <div class="logo" *ngIf="!isCollapsed">
+        <a routerLink="/dashboard">
+          <img src="/icons/spacex-logo.png" alt="SpaceX Logo">
+        </a>
+      </div>
+      <button class="toggle-btn" (click)="toggleSidebar()">
+        <i class="fa" [ngClass]="isCollapsed ? 'fa-bars' : 'fa-times'"></i>
+      </button>
+    </div>
+  
+    <ul class="nav-links">
+      <li>
+        <a routerLink="/dashboard/profile" routerLinkActive="active">
+          <i class="fa fa-user"></i> <span *ngIf="!isCollapsed">Profile</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/dashboard/latest-launches" routerLinkActive="active">
+          <i class="fa fa-rocket"></i> <span *ngIf="!isCollapsed">Latest Launches</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/dashboard/past-launches" routerLinkActive="active">
+          <i class="fa fa-history"></i> <span *ngIf="!isCollapsed">Past Launches</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/dashboard/upcoming-launches" routerLinkActive="active">
+          <i class="fa fa-calendar"></i> <span *ngIf="!isCollapsed">Upcoming Launches</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  
