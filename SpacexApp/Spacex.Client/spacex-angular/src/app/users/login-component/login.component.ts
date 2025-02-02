@@ -6,6 +6,8 @@ import { AuthService } from '../../services/auth.service';
 import { catchError, mergeMap, of } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +19,7 @@ export class LoginComponent {
   loginForm: FormGroup;
   showPassword = false;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private toastr: ToastrService, private router: Router) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private toastr: ToastrService, private router: Router, private dialog: MatDialog) {
     this.loginForm = this.fb.nonNullable.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
@@ -29,8 +31,21 @@ export class LoginComponent {
     this.showPassword = !this.showPassword;
   }
 
-  onForgotPasswordClicked(){
-    console.log("Forgot password clicked.");
+  onForgotPasswordClicked() {
+    this.dialog.open(ForgotPasswordComponent, {
+      width: '600px',
+      maxWidth: '800px',
+      height: '250px',
+      disableClose: false
+    }).afterClosed().subscribe(result => {
+      if (result) {
+
+        debugger;
+        this.router.navigate(['/reset-password'], { 
+          queryParams: { email: result } 
+        });
+      }
+    });
   }
 
   onSingUpClicked(){

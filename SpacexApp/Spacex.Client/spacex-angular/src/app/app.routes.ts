@@ -8,12 +8,15 @@ import { UpcomingLaunchesComponent } from './spacex-launches/upcoming-launches/u
 import { PastLaunchesComponent } from './spacex-launches/past-launches/past-launches.component';
 import { ProfileComponent } from './users/profile-component/profile.component';
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
+import { ResetPasswordComponent } from './users/reset-password/reset-password.component';
+import { ResetPasswordGuard } from './guards/reset-password.guard';
 
 export const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' }, 
   { path: 'signup', component: SignupComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent, canActivate: [AuthGuard] },
   { path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuard] }, 
+  { path: 'reset-password', component: ResetPasswordComponent, canActivate: [ResetPasswordGuard] }, 
   {
     path: 'dashboard',
     component: DashboardComponent,

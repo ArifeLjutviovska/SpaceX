@@ -59,6 +59,8 @@ namespace SpacexServer.Api
             builder.Services.AddTransient<ICommandHandler<LoginUserCommand, Result<LoginUserResponse>>, LoginUserCommandHandler>();
             builder.Services.AddTransient<ICommandHandler<RefreshTokenCommand, Result<LoginUserResponse>>, RefreshTokenCommandHandler>();
             builder.Services.AddTransient<ICommandHandler<UpdatePasswordCommand, Result>, UpdatePasswordCommandHandler>();
+            builder.Services.AddTransient<ICommandHandler<ForgotPasswordCommand, Result>, ForgotPasswordCommandHandler>();
+            builder.Services.AddTransient<ICommandHandler<ResetPasswordCommand, Result>, ResetPasswordCommandHandler>();
 
             builder.Services.AddTransient<IQueryHandler<GetSpacexLaunchesQuery, PagedResult<SpaceXLaunchDto>>, GetSpacexLaunchesQueryHandler>();
 

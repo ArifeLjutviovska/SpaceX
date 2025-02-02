@@ -17,6 +17,7 @@ export class PastLaunchesComponent implements OnInit {
   totalPages = 0;
   pageSize = 20;
   totalItems = 0;
+  launchesLoaded = false;
 
   constructor(private spacexService: SpacexService) {}
 
@@ -27,6 +28,7 @@ export class PastLaunchesComponent implements OnInit {
   loadLaunches() {
     this.spacexService.getPastLaunches(this.currentPage, this.pageSize).subscribe(response => {
       if (response.isSuccess && response.value) {
+        this.launchesLoaded = true;
         this.launches = response.value.items;
         this.totalPages = response.value.totalPages || 0;
         this.currentPage = response.value.currentPage || 1;

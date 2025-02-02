@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 import { appRoutes } from './app.routes';
+import { MatDialogModule } from '@angular/material/dialog';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -12,6 +13,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([JwtInterceptor])), 
     importProvidersFrom(
       BrowserAnimationsModule, 
+      MatDialogModule,
       ToastrModule.forRoot({
         positionClass: 'toast-top-right', 
         timeOut: 4000, 

@@ -50,9 +50,10 @@
 
         private async Task<List<SpaceXLaunchDto>> FetchLatestLaunchesAsync()
         {
-            var response = await _httpClient.GetFromJsonAsync<List<SpaceXLaunchDto>>("https://api.spacexdata.com/v5/launches/latest");
-            return response ?? [];
+            var response = await _httpClient.GetFromJsonAsync<SpaceXLaunchDto>("https://api.spacexdata.com/v5/launches/latest");
+            return response != null ? [response] : [];
         }
+
 
         private async Task<List<SpaceXLaunchDto>> FetchUpcomingLaunchesAsync()
         {

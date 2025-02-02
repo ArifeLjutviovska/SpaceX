@@ -1,5 +1,6 @@
 ﻿namespace SpacexServer.Api.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using SpacexServer.Api.Commands.RefreshTokens;
     using SpacexServer.Api.Commands.Users;
@@ -62,6 +63,7 @@
         /// Updates the user's password. Requires authentication.
         /// </summary>
         [HttpPut("update-password")]
+        [Authorize]
         [SwaggerOperation(Summary = "Updates the user's password.", Description = "Requires current password verification.")]
         [SwaggerResponse((int)HttpStatusCode.OK, "Password updated successfully.", typeof(Result))]
         [SwaggerResponse((int)HttpStatusCode.Unauthorized, "Unauthorized request.")]
@@ -77,6 +79,36 @@
 
             request.Email = email;
             var result = await _commandDispatcher.ExecuteAsync(new UpdatePasswordCommand(request));
+
+            return OkOrError(result);
+        }
+
+        /// <summary>
+        /// Verifies the email of the user that forgotted the password. Just sends request as Ok or Failed.
+        /// </summary>
+        [HttpPut("forgot-password")]
+        [SwaggerOperation(Summary = "Validates the email.", Description = "Requires email verification.")]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Email verified successfully.", typeof(Result))]
+        [SwaggerResponse((int)HttpStatusCode.Unauthorized, "Unauthorized request.")]
+        [SwaggerResponse((int)HttpStatusCode.BadRequest, "Invalid request.")]
+        public async Task<IActionResult> ForgotPasswordAsync([FromBody] ForgotPasswordRequest request)
+        {
+            var result = await _commandDispatcher.ExecuteAsync(new ForgotPasswordCommand(request));
+
+            return OkOrError(result);
+        }
+
+        /// <summary>
+        /// Resets the user's password.
+        /// </summary>
+        [HttpPut("reset-password")]
+        [SwaggerOperation(Summary = "Resets the user's password.", Description = "Requires email verification.")]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Password updated successfully.", typeof(Result))]
+        [SwaggerResponse((int)HttpStatusCode.Unauthorized, "Unauthorized request.")]
+        [SwaggerResponse((int)HttpStatusCode.BadRequest, "Invalid request.")]
+        public async Task<IActionResult> ResetPasswordAsync([FromBody] ResetPasswordRequest request)
+        {
+            var result = await _commandDispatcher.ExecuteAsync(new ResetPasswordCommand(request));
 
             return OkOrError(result);
         }

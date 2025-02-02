@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, tap } from "rxjs";
-import { Result, SignUpRequest, LoginRequest, LoginResponse,  UpdatePasswordRequest } from "../models/spacex.models";
+import { Result, SignUpRequest, LoginRequest, LoginResponse,  UpdatePasswordRequest, ResetPasswordRequest } from "../models/spacex.models";
 import { ToastrService } from "ngx-toastr";
 import { JwtHelperService } from '@auth0/angular-jwt';
 
@@ -46,6 +46,9 @@ export class AuthService {
     return this.httpService.put<Result<void>>(`${this.baseApiUrl}/update-password`, data);
   }
   
+  resetPassword(data: ResetPasswordRequest): Observable<Result<void>> {
+    return this.httpService.put<Result<void>>(`${this.baseApiUrl}/reset-password`, data);
+  }
 
   getCurrentUser(): { firstName: string; lastName: string; email: string } | null {
     const token = this.getAccessToken();
@@ -71,6 +74,10 @@ export class AuthService {
     localStorage.removeItem('refreshToken');
   }
 
+  forgotPassword(email: string) : Observable<Result<void>>{
+    return this.httpService.put<Result<void>>(`${this.baseApiUrl}/forgot-password`, {email: email});
+  }
+  
   public getAccessToken(): string | null {
     return localStorage.getItem('accessToken');
   }
