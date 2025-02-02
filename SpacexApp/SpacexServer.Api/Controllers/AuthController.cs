@@ -10,6 +10,7 @@
     using SpacexServer.Api.Contracts.Users.Responses;
     using Swashbuckle.AspNetCore.Annotations;
     using System.Net;
+    using System.Security.Claims;
 
     [ApiController]
     [Route("api/auth")]
@@ -54,6 +55,29 @@
         public async Task<IActionResult> RefreshTokenAsync([FromBody] RefreshTokenRequest request)
         {
             Result<LoginUserResponse> result = await _commandDispatcher.ExecuteAsync(new RefreshTokenCommand(request));
+            return OkOrError(result);
+        }
+
+        /// <summary>
+        /// Updates the user's password. Requires authentication.
+        /// </summary>
+        [HttpPut("update-password")]
+        [SwaggerOperation(Summary = "Updates the user's password.", Description = "Requires current password verification.")]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Password updated successfully.", typeof(Result))]
+        [SwaggerResponse((int)HttpStatusCode.Unauthorized, "Unauthorized request.")]
+        [SwaggerResponse((int)HttpStatusCode.BadRequest, "Invalid request.")]
+        public async Task<IActionResult> UpdatePasswordAsync([FromBody] UpdatePasswordRequest request)
+        {
+            string? email = User.FindFirstValue(ClaimTypes.Email);
+
+            if (string.IsNullOrEmpty(email))
+            {
+                return Unauthorized(Result.Failed("Unauthorized request."));
+            }
+
+            request.Email = email;
+            var result = await _commandDispatcher.ExecuteAsync(new UpdatePasswordCommand(request));
+
             return OkOrError(result);
         }
     }

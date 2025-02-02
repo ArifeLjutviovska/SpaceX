@@ -25,6 +25,11 @@ export interface Result<T> {
     password: string;
   }
 
+  export interface UpdatePasswordRequest{
+    currentPassword: string;
+    newPassword: string;
+  }
+
   export interface LoginRequest {
     email: string;
     password: string;

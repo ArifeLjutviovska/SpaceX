@@ -53,8 +53,9 @@
                 Subject = new ClaimsIdentity(
                 [
                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}")
+                    new Claim(ClaimTypes.Email, user.Email),
+                    new Claim("firstName", user.FirstName),
+                    new Claim("lastName", user.LastName)
                 ]),
                 Expires = DateTime.UtcNow.AddMinutes(_accessTokenExpiryMinutes),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(keyBytes), SecurityAlgorithms.HmacSha256),

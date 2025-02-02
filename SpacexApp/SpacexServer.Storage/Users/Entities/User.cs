@@ -31,5 +31,10 @@
                 Password = password
             };
         }
+
+        public void UpdatePassword(string password)
+        {
+            Password = password;
+        }
     }
 }

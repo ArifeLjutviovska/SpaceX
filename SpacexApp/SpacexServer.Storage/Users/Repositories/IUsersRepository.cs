@@ -8,6 +8,8 @@
 
         Task<User?> GetByIdAsync(int id);
 
+        Task UpdateAsync(User user);
+
         Task InsertAsync(User user);
     }
 }

@@ -18,6 +18,12 @@
             return await _dbContext.Users.FindAsync(id);
         }
 
+        public async Task UpdateAsync(User user)
+        {
+            _dbContext.Users.Update(user);
+            await _dbContext.SaveChangesAsync();
+        }
+
         public async Task InsertAsync(User user)
         {
             await _dbContext.Users.AddAsync(user);

@@ -1,0 +1,23 @@
+<div class="profile-container">
+    <div class="profile-header">
+      <h2 class="title">Profile</h2>
+      <button class="logout-btn" (click)="logout()">Log Out</button>
+    </div>
+  
+    <div class="profile-content">
+      <div class="profile-section">
+        <p><strong>First Name:</strong> {{ user?.firstName ?? '' }}</p>
+      </div>
+      <div class="profile-section">
+        <p><strong>Last Name:</strong> {{ user?.lastName ?? '' }}</p>
+      </div>
+      <div class="profile-section">
+        <p><strong>Email:</strong> {{ user?.email ?? ''}}</p>
+      </div>
+  
+      <div class="profile-actions">
+        <a (click)="navigateToChangePassword()">Change Password</a>
+      </div>
+    </div>
+  </div>
+  

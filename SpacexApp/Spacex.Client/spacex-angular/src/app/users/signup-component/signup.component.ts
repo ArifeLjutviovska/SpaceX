@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl, ReactiveFormsModule } from '@angular/forms';
-import { LoginResponse, Result, SignUpRequest } from '../models/spacex.models';
-import { AuthService  } from '../services/auth.service';
+import { LoginResponse, Result, SignUpRequest } from '../../models/spacex.models';
+import { AuthService  } from '../../services/auth.service';
 import { catchError, mergeMap, of } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
@@ -55,11 +55,11 @@ export class SignupComponent {
   }
 
   showSuccess(message: string) {
-    this.toastr.success(message, 'Success');
+    this.toastr.success(message);
   }
 
   showError(message: string) {
-    this.toastr.error(message, 'Error');
+    this.toastr.error(message);
   }
 
   onSubmit() {
@@ -88,13 +88,14 @@ export class SignupComponent {
               if (loginResult.isSuccess) {
                 setTimeout(() => this.router.navigate(['/dashboard']), 2000); 
               } else {
-                throw new Error(loginResult?.message || 'Login failed.');
+                this.showError(loginResult?.message || 'Login failed.');
               }
               return of(null);
             })
           );
         } else {
-          throw new Error(result?.message || 'Signup failed.');
+          this.showError(result?.message || 'Signup failed.');
+          return of(null);
         }
       }),
       catchError((error) => {

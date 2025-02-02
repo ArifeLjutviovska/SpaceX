@@ -22,7 +22,7 @@ export class AuthGuard implements CanActivate {
       return true;
     } else {
       if (!isAuthRoute) {
-        this.toastr.error("Please log in first!", 'Error');
+        this.toastr.error("Please log in first!");
         this.router.navigate(['/login']); 
         return false;
       }
