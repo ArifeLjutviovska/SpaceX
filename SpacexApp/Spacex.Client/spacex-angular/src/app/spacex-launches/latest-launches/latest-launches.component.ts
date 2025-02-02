@@ -40,6 +40,13 @@ export class LatestLaunchesComponent implements OnInit {
         this.totalItems = 0;
       }
     });
+
+    if (!this.launchesLoaded){
+      this.launches = [];
+      this.totalPages = 0;  
+      this.currentPage = 1;
+      this.totalItems = 0;
+    }
   }
   
 
