@@ -39,8 +39,6 @@ export class LoginComponent {
       disableClose: false
     }).afterClosed().subscribe(result => {
       if (result) {
-
-        debugger;
         this.router.navigate(['/reset-password'], { 
           queryParams: { email: result } 
         });

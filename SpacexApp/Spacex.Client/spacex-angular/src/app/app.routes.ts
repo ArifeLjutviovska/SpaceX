@@ -22,10 +22,10 @@ export const appRoutes: Routes = [
     component: DashboardComponent,
     canActivate: [AuthGuard], 
     children: [
-      { path: 'profile', component: ProfileComponent },
-      { path: 'latest-launches', component: LatestLaunchesComponent },
-      { path: 'upcoming-launches', component: UpcomingLaunchesComponent },
-      { path: 'past-launches', component: PastLaunchesComponent },
+      { path: 'profile', component: ProfileComponent , canActivate: [AuthGuard]},
+      { path: 'latest-launches', component: LatestLaunchesComponent , canActivate: [AuthGuard]},
+      { path: 'upcoming-launches', component: UpcomingLaunchesComponent , canActivate: [AuthGuard]},
+      { path: 'past-launches', component: PastLaunchesComponent, canActivate: [AuthGuard] },
       { path: '', redirectTo: 'profile', pathMatch: 'full' }
     ]
   },

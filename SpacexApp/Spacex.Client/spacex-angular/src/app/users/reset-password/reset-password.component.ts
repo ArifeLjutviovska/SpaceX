@@ -70,13 +70,10 @@ export class ResetPasswordComponent implements OnInit{
              email: this.email,
              newPassword: this.changePasswordForm.controls['password'].value
            };
-
-           debugger;
          
                this.authService.resetPassword(request).pipe(
                  mergeMap((result: Result<void>) => {
                    if (result.isSuccess) {
-                    localStorage.removeItem('resetEmail');
                     this.toastr.success('The password was reset successfully! Redirecting to the login page...');
                      setTimeout(() => this.router.navigate(['/login']), 2000);
                    } else {
