@@ -9,6 +9,10 @@
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// Handles password reset by validating the request, ensuring password strength,
+    /// and updating the password in the database if valid.
+    /// </summary>
     public class ResetPasswordCommand(ResetPasswordRequest request) : ICommand<Result>
     {
         public ResetPasswordRequest Request { get; set; } = request;

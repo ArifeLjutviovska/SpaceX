@@ -8,6 +8,11 @@
     using SpacexServer.Api.Common.Security;
     using System.Text.RegularExpressions;
 
+    /// <summary>
+    /// Command to handle user sign-up.
+    /// Validates the request, checks for existing email, hashes the password, and stores the new user in the database.
+    /// </summary>
+    /// <param name="request">The request containing user sign-up details.</param>
     public class SignUpUserCommand(SignUpUserRequest request) : ICommand<Result>
     {
         public SignUpUserRequest Request { get; set; } = request;

@@ -10,6 +10,11 @@
     using SpacexServer.Storage.RefreshTokens.Entities;
     using SpacexServer.Storage.RefreshTokens.Repositories;
 
+    /// <summary>
+    /// Command to handle user login.
+    /// Takes an email and password as input and returns a JWT access token and refresh token upon successful authentication.
+    /// </summary>
+    /// <param name="request">The login request containing user credentials.</param>
     public class LoginUserCommand(LoginRequest request) : ICommand<Result<LoginUserResponse>>
     {
         public LoginRequest Request { get; set; } = request;

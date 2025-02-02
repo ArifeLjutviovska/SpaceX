@@ -3,6 +3,10 @@
     using SpacexServer.Api.Common.Enums;
     using System.Net;
 
+    /// <summary>
+    /// Represents the base class for operation results, providing a structured approach to handling success and failure cases.
+    /// This class ensures that results are properly categorized and associated with relevant HTTP status codes.
+    /// </summary>
     public abstract class ResultCommonLogic
     {
         private readonly string _message;

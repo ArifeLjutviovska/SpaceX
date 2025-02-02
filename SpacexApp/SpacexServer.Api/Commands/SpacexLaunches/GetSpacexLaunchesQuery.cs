@@ -5,9 +5,20 @@
     using SpacexServer.Api.Contracts.SpacexLaunches.Responses;
     using SpacexServer.Api.Contracts.SpacexLaunches.Services;
 
-    public class GetSpacexLaunchesQuery(int pageNumber, int pageSize, bool getPastLaunches, bool getLatestLaunches, bool getUpcomingLaunches) : IQuery<PagedResult<SpaceXLaunchDto>>
+    /// <summary>
+    /// Query to retrieve paginated SpaceX launches from cache or external API.
+    /// Allows fetching past, latest, or upcoming launches.
+    /// </summary>
+    /// <param name="pageNumber">The current page number for pagination.</param>
+    /// <param name="pageSize">The number of launches per page.</param>
+    /// <param name="getPastLaunches">Indicates if past launches should be retrieved.</param>
+    /// <param name="getLatestLaunches">Indicates if the latest launch should be retrieved.</param>
+    /// <param name="getUpcomingLaunches">Indicates if upcoming launches should be retrieved.</param>
+    public class GetSpacexLaunchesQuery(int pageNumber, int pageSize, bool getPastLaunches, bool getLatestLaunches, bool getUpcomingLaunches) 
+          : IQuery<PagedResult<SpaceXLaunchDto>>
     {
         public int PageNumber { get; set; } = pageNumber;
+
         public int PageSize { get; set; } = pageSize;
 
         public bool GetPastLaunches { get; set; } = getPastLaunches;

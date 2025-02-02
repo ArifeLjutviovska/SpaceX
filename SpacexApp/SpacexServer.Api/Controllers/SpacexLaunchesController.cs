@@ -9,6 +9,12 @@
     using Swashbuckle.AspNetCore.Annotations;
     using System.Net;
 
+
+    /// <summary>
+    /// Controller for retrieving SpaceX launch data.
+    /// Provides endpoints for past, latest, and upcoming launches with pagination.
+    /// Requires authentication.
+    /// </summary>
     [Authorize] 
     [ApiController]
     [Route("api/spacex")] 
@@ -19,6 +25,9 @@
         /// <summary>
         /// Retrieves a paginated list of past SpaceX launches.
         /// </summary>
+        /// <param name="pageNumber">The page number to retrieve. Default is 1.</param>
+        /// <param name="pageSize">The number of launches per page. Default is 20.</param>
+        /// <returns>A paginated list of past SpaceX launches.</returns>
         [HttpGet("past-launches")]
         [SwaggerOperation(Summary = "Gets past SpaceX launches with pagination.")]
         [SwaggerResponse((int)HttpStatusCode.OK, "Successful response.", typeof(Result<PagedResult<SpaceXLaunchDto>>))]
@@ -34,8 +43,11 @@
         }
 
         /// <summary>
-        /// Retrieves a paginated list of latest SpaceX launches.
+        /// Retrieves a paginated list of the latest SpaceX launches.
         /// </summary>
+        /// <param name="pageNumber">The page number to retrieve. Default is 1.</param>
+        /// <param name="pageSize">The number of launches per page. Default is 20.</param>
+        /// <returns>A paginated list of the latest SpaceX launches.</returns>
         [HttpGet("latest-launches")]
         [SwaggerOperation(Summary = "Gets latest SpaceX launches with pagination.")]
         [SwaggerResponse((int)HttpStatusCode.OK, "Successful response.", typeof(Result<PagedResult<SpaceXLaunchDto>>))]
@@ -53,6 +65,9 @@
         /// <summary>
         /// Retrieves a paginated list of upcoming SpaceX launches.
         /// </summary>
+        /// <param name="pageNumber">The page number to retrieve. Default is 1.</param>
+        /// <param name="pageSize">The number of launches per page. Default is 20.</param>
+        /// <returns>A paginated list of upcoming SpaceX launches.</returns>
         [HttpGet("upcoming-launches")]
         [SwaggerOperation(Summary = "Gets upcoming SpaceX launches with pagination.")]
         [SwaggerResponse((int)HttpStatusCode.OK, "Successful response.", typeof(Result<PagedResult<SpaceXLaunchDto>>))]

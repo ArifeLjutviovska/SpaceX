@@ -4,33 +4,32 @@
     using System.Security.Claims;
     using System.Security.Cryptography;
     using System.Text;
-    using Microsoft.EntityFrameworkCore.Metadata.Internal;
     using Microsoft.IdentityModel.Tokens;
     using SpacexServer.Storage.Users.Entities;
 
-    public class JwtService
+    /// <summary>
+    /// Service for generating and managing JWT authentication tokens.
+    /// This includes creating access tokens for authentication and refresh tokens for session renewal.
+    /// Uses HMAC SHA-256 encryption for secure token signing.
+    /// </summary>
+    public class JwtService(IConfiguration configuration)
     {
 
-        private readonly string _jwtSecret;
-        private readonly string _issuer;
-        private readonly string _audience;
-        private readonly int _accessTokenExpiryMinutes;
-        private readonly int _refreshTokenExpiryDays;
-
-        public JwtService(IConfiguration configuration)
-        {
-            _jwtSecret = configuration["JwtSettings:Secret"] ?? Environment.GetEnvironmentVariable("JWT_SECRET")
+        private readonly string _jwtSecret = configuration["JwtSettings:Secret"] ?? Environment.GetEnvironmentVariable("JWT_SECRET")
                 ?? throw new ArgumentNullException("JWT secret is missing.");
-
-            _issuer = configuration["JwtSettings:Issuer"] ?? throw new ArgumentNullException("JWT issuer is missing.");
-            _audience = configuration["JwtSettings:Audience"] ?? throw new ArgumentNullException("JWT audience is missing.");
-            _accessTokenExpiryMinutes = int.Parse(configuration["JwtSettings:AccessTokenExpiryMinutes"] ?? "15");
-            _refreshTokenExpiryDays = int.Parse(configuration["JwtSettings:RefreshTokenExpiryDays"] ?? "7");
-        }
+        private readonly string _issuer = configuration["JwtSettings:Issuer"] ?? throw new ArgumentNullException("JWT issuer is missing.");
+        private readonly string _audience = configuration["JwtSettings:Audience"] ?? throw new ArgumentNullException("JWT audience is missing.");
+        private readonly int _accessTokenExpiryMinutes = int.Parse(configuration["JwtSettings:AccessTokenExpiryMinutes"] ?? "15");
+        private readonly int _refreshTokenExpiryDays = int.Parse(configuration["JwtSettings:RefreshTokenExpiryDays"] ?? "7");
 
         /// <summary>
-        /// Generates a JWT access token for a given user.
+        /// Generates a JWT access token for the specified user.
+        /// The token includes user claims (ID, email, first & last name) and is signed with HMAC SHA-256.
+        /// The expiration time is configured via app settings.
         /// </summary>
+        /// <param name="user">User entity containing ID, email, first & last name.</param>
+        /// <returns>A signed JWT access token as a string.</returns>
+
         public string GenerateAccessToken(User user)
         {
             byte[] keyBytes;
@@ -69,8 +68,10 @@
         }
 
         /// <summary>
-        /// Generates a cryptographically secure refresh token.
+        /// Generates a secure, cryptographically random refresh token.
+        /// Used to maintain authentication without requiring the user to log in again.
         /// </summary>
+        /// <returns>A base64-encoded refresh token string.</returns>
         public string GenerateRefreshToken()
         {
             var randomBytes = new byte[64];

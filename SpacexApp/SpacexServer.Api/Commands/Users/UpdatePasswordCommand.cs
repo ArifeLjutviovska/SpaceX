@@ -9,6 +9,11 @@
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// Handles the process of updating a user's password.
+    /// This includes verifying the current password, validating the new password's strength, 
+    /// hashing the new password, and updating the database.
+    /// </summary>
     public class UpdatePasswordCommand(UpdatePasswordRequest request) : ICommand<Result>
     {
         public UpdatePasswordRequest Request { get; set; } = request;

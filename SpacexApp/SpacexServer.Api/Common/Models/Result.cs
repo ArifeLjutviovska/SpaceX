@@ -2,6 +2,10 @@
 {
     using SpacexServer.Api.Common.Enums;
 
+    /// <summary>
+    /// Represents the outcome of an operation, encapsulating success or failure states.
+    /// Provides predefined static methods for common result types.
+    /// </summary>
     public class Result : ResultCommonLogic
     {
         private Result()
@@ -89,6 +93,10 @@
             return new Result<T>(result.ResultType, result.Message);
         }
 
+        /// <summary>
+        /// Returns the first failure from a list of results, or a success if none failed.
+        /// </summary>
+        /// <param name="results">An array of results.</param>
         public static Result FirstFailureOrOk(params Result[] results)
         {
             if (results.Any((Result f) => f.IsFailure))
@@ -99,6 +107,11 @@
             return Ok();
         }
 
+        /// <summary>
+        /// Returns the first failure from a list of generic results, or a success if none failed.
+        /// </summary>
+        /// <typeparam name="T">The type of the result value.</typeparam>
+        /// <param name="results">An enumerable of generic results.</param>
         public static Result FirstFailureOrOk<T>(IEnumerable<Result<T>> results)
         {
             if (results.Any((Result<T> x) => x.IsFailure))
@@ -110,6 +123,10 @@
         }
     }
 
+    /// <summary>
+    /// Represents the outcome of an operation that returns a value of type <typeparamref name="T"/>.
+    /// </summary>
+    /// <typeparam name="T">The type of the value returned by the operation.</typeparam>
     public class Result<T> : ResultCommonLogic
     {
         public bool IsEmpty

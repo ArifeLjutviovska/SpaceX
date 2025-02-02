@@ -13,6 +13,10 @@
     using System.Net;
     using System.Security.Claims;
 
+    /// <summary>
+    /// Controller for handling authentication and user account management.
+    /// Provides endpoints for user registration, login, password updates, token refresh, and password recovery.
+    /// </summary>
     [ApiController]
     [Route("api/auth")]
     public class AuthController(ICommandDispatcher commandDispatcher) : ExtendedApiController
@@ -22,6 +26,8 @@
         /// <summary>
         /// Registers a new user.
         /// </summary>
+        /// <param name="request">The user registration details.</param>
+        /// <returns>A response indicating success or failure of the registration process.</returns>
         [HttpPost("signup")]
         [SwaggerOperation(Summary = "Registers a new user.")]
         [SwaggerResponse((int)HttpStatusCode.OK, "User registered successfully.", typeof(Result))]
@@ -36,6 +42,8 @@
         /// <summary>
         /// Logs in a user and returns JWT access & refresh tokens.
         /// </summary>
+        /// <param name="request">User login credentials.</param>
+        /// <returns>JWT access and refresh tokens if authentication is successful.</returns>
         [HttpPost("login")]
         [SwaggerOperation(Summary = "Logs in a user and returns JWT tokens.")]
         [SwaggerResponse((int)HttpStatusCode.OK, "Login successful.", typeof(Result<LoginUserResponse>))]
@@ -47,8 +55,10 @@
         }
 
         /// <summary>
-        /// Refreshes an expired JWT access token.
+        /// Refreshes an expired JWT access token using a valid refresh token.
         /// </summary>
+        /// <param name="request">The refresh token request.</param>
+        /// <returns>A new access token and refresh token if the provided refresh token is valid.</returns>
         [HttpPost("refresh-token")]
         [SwaggerOperation(Summary = "Refreshes an expired JWT access token.")]
         [SwaggerResponse((int)HttpStatusCode.OK, "Token refreshed successfully.", typeof(Result<LoginUserResponse>))]
@@ -62,6 +72,8 @@
         /// <summary>
         /// Updates the user's password. Requires authentication.
         /// </summary>
+        /// <param name="request">Request containing the current and new password.</param>
+        /// <returns>A response indicating success or failure of the password update.</returns>
         [HttpPut("update-password")]
         [Authorize]
         [SwaggerOperation(Summary = "Updates the user's password.", Description = "Requires current password verification.")]
@@ -84,8 +96,10 @@
         }
 
         /// <summary>
-        /// Verifies the email of the user that forgotted the password. Just sends request as Ok or Failed.
+        /// Verifies if the provided email exists in the system for password reset.
         /// </summary>
+        /// <param name="request">The request containing the user's email.</param>
+        /// <returns>A response indicating whether the email exists and if the user can proceed with password reset.</returns>
         [HttpPut("forgot-password")]
         [SwaggerOperation(Summary = "Validates the email.", Description = "Requires email verification.")]
         [SwaggerResponse((int)HttpStatusCode.OK, "Email verified successfully.", typeof(Result))]
@@ -101,6 +115,8 @@
         /// <summary>
         /// Resets the user's password.
         /// </summary>
+        /// <param name="request">Request containing the new password and user email verification.</param>
+        /// <returns>A response indicating whether the password reset was successful.</returns>
         [HttpPut("reset-password")]
         [SwaggerOperation(Summary = "Resets the user's password.", Description = "Requires email verification.")]
         [SwaggerResponse((int)HttpStatusCode.OK, "Password updated successfully.", typeof(Result))]

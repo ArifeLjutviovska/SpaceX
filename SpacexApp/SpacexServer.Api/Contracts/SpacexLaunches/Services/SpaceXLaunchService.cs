@@ -3,17 +3,16 @@
     using Microsoft.Extensions.Caching.Memory;
     using SpacexServer.Api.Contracts.SpacexLaunches.Responses;
 
-    public class SpaceXLaunchService
+    /// <summary>
+    /// Service to retrieve SpaceX launch data (past, upcoming, and latest).
+    /// Data is first retrieved from the cached memory for performance optimization.
+    /// If not found in cache, data is fetched from the official SpaceX API.
+    /// </summary>
+    public class SpaceXLaunchService(HttpClient httpClient, IMemoryCache cache)
     {
-        private readonly HttpClient _httpClient;
-        private readonly IMemoryCache _cache;
+        private readonly HttpClient _httpClient = httpClient;
+        private readonly IMemoryCache _cache = cache;
         private readonly TimeSpan CacheDuration = TimeSpan.FromMinutes(10);
-
-        public SpaceXLaunchService(HttpClient httpClient, IMemoryCache cache)
-        {
-            _httpClient = httpClient;
-            _cache = cache;
-        }
 
         public async Task<List<SpaceXLaunchDto>> GetCachedPastLaunchesAsync()
         {
