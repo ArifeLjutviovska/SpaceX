@@ -275,6 +275,7 @@ You can see the application demo on this link: [Demo](https://www.loom.com/share
 - Unit & Integration Tests
 - HTTPS for production
 - Dark Mode & UI Enhancements
+- Adding Email verification for Sign-up and Forgot Password
 
 ##  Contact
 For any questions, feel free to reach out:
