@@ -127,3 +127,14 @@ If you don’t want to enable file sharing:
 | `GET`  | `/api/spacex/upcoming-launches`    | Get upcoming launches               |
 | `GET`  | `/api/spacex/past-launches`        | Get past launches                   |
 
+
+
+##  Future Improvements
+- Unit & Integration Tests
+- HTTPS for production
+- Dark Mode & UI Enhancements
+
+##  Contact
+For any questions, feel free to reach out:
+💻 [LinkedIn Profile](https://www.linkedin.com/in/arife-ljutviovska-892b33192/)
+
