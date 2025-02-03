@@ -10,6 +10,7 @@
 - [Setup & Installation With Docker](#setup--installation-with-docker)
 - [Setup & Installation On Local Machine](#setup--installation-on-local-machine)
 - [API Endpoints](#api-endpoints)
+- [Demo](#demo)
 - [Future Improvements](#future-improvements)
 - [Contact](#contact)
 
@@ -247,7 +248,8 @@ If these ports are already in use on your machine, you can change them as follow
    ```
    
 
-
+##  Demo
+You can see the application demo on this link: [Demo](https://www.loom.com/share/8eaf568f2fe4422bb36c61ebbe87caaf?sid=dab978ee-017d-4584-a9d8-ec0899cc3f13)
 
 
 ##  API Endpoints
