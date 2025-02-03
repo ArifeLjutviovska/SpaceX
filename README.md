@@ -27,13 +27,14 @@ This web application allows users to:
  -  Fully responsive design
    
 This project follows best practices for security, scalability, and modularity in a .NET + Angular stack.
+
 SpaceX launches for showing to the user are get from this API: [SpaceX API](https://github.com/r-spacex/SpaceX-API)
 
 
 ## Technologies Used
-- **Frontend**: Angular (Latest)
+- **Frontend**: Angular 19
 - **Backend**: .NET 8 Web API (C#)
-- **Database**: SQL Server (for local storage)
+- **Database**: SQL Server
 - **Authentication**: JWT Tokens with HttpOnly Cookies
 - **Deployment**: Docker
 
@@ -45,7 +46,7 @@ Before cloning the repository, make sure you have the following installed:
 **1. Prerequisites for running the application with docker:**
 
   - Git: [Git Download](https://git-scm.com/downloads)
-  - Docker: [Docker Dekstop](https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/)
+  - Docker: [Docker Dekstop](https://www.docker.com/get-started/)
     
 **2. Prerequisites for running the application locally:**   
   - Git: [Git Download](https://git-scm.com/downloads)
@@ -74,8 +75,8 @@ Before cloning the repository, make sure you have the following installed:
  **3. Download the .env File from GitHub Actions:**
  
    - You will see that on SpaceX folder we have docker-compose  folder. In order for application to run you need to have .env file on docker-compose folder.
-   - You can get the .env file by following these steps: [Steps to get environment file](#steps-to-get-environment-file)
-   - After successfull download of .env file,  Move the .env folder to SpaceX/docker-compose folder on the cloned project.
+   - You can get the .env file by following these steps: [Get Environment File](#get-environment-file)
+   - After successfull download of .env file, move the .env folder to SpaceX/docker-compose folder on the cloned project. The location of the ```.env``` should be on the same directory as ```.env.template```
 
  **4. Start the Project Using Docker Compose:**
  
@@ -106,10 +107,10 @@ If you are already on SpaceX/docker-compose folder on your terminal, just run th
 
 
 
-## 📌 Steps to get environment file
-- Go to this link which is link of the one of the successfull Actions on theese repository: 👉 [GitHub Actions](https://github.com/ArifeLjutviovska/SpaceX/actions/runs/13117986904)
+## 📌Get Environment File
+- Go to this link which is link of the one of the successfull Actions on this repository: 👉 [GitHub Actions](https://github.com/ArifeLjutviovska/SpaceX/actions/runs/13117986904)
 - Scroll down to the Artifacts section and download env-file.zip.
-- Extract the .zip file to get the .env file. (***Note:** You need to be logged in to github in order to download the file)
+- Extract the .zip file to get the .env file. (**Note:** You need to be logged in to github in order to download the file)
   ![image](https://github.com/user-attachments/assets/4773379c-ee21-439b-9b65-03541ca8e63a)  
 
 
@@ -140,7 +141,7 @@ If you don’t want to enable file sharing:
 
 By default, the application runs on:
 
-- Frontend (Angular): On docker:  ```http://localhost:4300```, Locally:  ```http://localhost:4200```
+- Frontend (Angular): On docker:  ```http://localhost:4300```, locally:  ```http://localhost:4200```
 - Backend API (.NET): ```http://localhost:7005```
   
 If these ports are already in use on your machine, you can change them as follows:
@@ -148,7 +149,7 @@ If these ports are already in use on your machine, you can change them as follow
 **1. If you run the project locally:**
 
  **Frontend (Angular)**
-   - Modify **Program.cs** in SpacexServer.Api, cfind the code: ``` .WithOrigins("http://localhost:4300", "http://localhost:4200")``` add the url with your new port
+   - Modify **Program.cs** in SpacexServer.Api, find this code in Program.cs: ```.WithOrigins("http://localhost:4300", "http://localhost:4200")``` add the url (http://localhost:{port_number}).
    - Run Angular on a different port using: ``` ng serve --port=4500 ```  Or you can change your port based on your preference.  
    - Then access the frontend at http://localhost:4500
 
@@ -157,13 +158,13 @@ If these ports are already in use on your machine, you can change them as follow
   - Open Properties/launchSettings.json inside SpacexServer.Api.
   - Change ```ASPNETCORE_URLS``` to some port rather then 7005
   - Modify **Program.cs** in SpacexServer.Api, find this code: ```options.ListenAnyIP(7005);``` and change it to your preffered port.
-  - Restart the backend and use http://localhost:{port-you applied-on-launchSetting.json}.
+  - Restart the backend and use http://localhost:{port_number}.
 
 **2. If you run the project on Docker:**
 
   **Frontend (Angular)**
    - Change ```EXPOSE 4300``` in Dockerfile on spacex-angular folder
-   - Change **docker-compose.yml** which is in SpaceX/docker-compose folder, you will need to change the port for **SpacexServer.Client:** to the port you added in Dockerfile. Change the following code:
+   - Change **docker-compose.yml** which is in SpaceX/docker-compose folder, you will need to change the port for **SpacexServer.Client** to the port you added in Dockerfile. Change the following code:
   ```sh
          ports:
          - "4300:4300"
@@ -174,7 +175,7 @@ If these ports are already in use on your machine, you can change them as follow
   - Open Properties/launchSettings.json inside SpacexServer.Api.
   - Change ```ASPNETCORE_URLS``` to some port rather then 7005
   - Modify **Program.cs** in SpacexServer.Api, find this code: ```options.ListenAnyIP(7005);``` and change it to your preffered port.
-  - Change **docker-compose.yml** which is in SpaceX/docker-compose folder, you will need to change the port for **SpacexServer.Api:** to the port you added in launchSettings.json. Change the following code:
+  - Change **docker-compose.yml** which is in SpaceX/docker-compose folder, you will need to change the port for **SpacexServer.Api** to the port you added in launchSettings.json. Change the following code:
   ```sh
          ports:
          - "7005:7005"
@@ -206,13 +207,27 @@ If these ports are already in use on your machine, you can change them as follow
  - Create  Database connection on SQL Server [click here](https://learn.microsoft.com/en-us/sql/relational-databases/databases/create-a-database?view=sql-server-ver16)
  - Modify **appsettings.json** which is in SpaceX/SpacexApp/SpacexServer.Api directory, change the connection string with your database connection string
  - Modify **TargetConnectionString** in Spacex.Database.SqlDb.xml, which is in SpaceX/SpacexApp/Spacex.Database folder
- - Then execute the following command:
-    ```sh
-   SqlPackage.exe /Action:Publish /SourceFile:"Spacex/SpacexApp/Spacex.Database/Spacex.Database.SqlDb.xml" /TargetConnectionString:"data source=YOUR_SQL_SERVER;User Id=YOUR_USERNAME;Password=YOUR_PASSWORD;initial catalog=Spacex;TrustServerCertificate=True;MultipleActiveResultSets=True;"
-   ```
+ - Publish the database with those options: 
+ 
+  - **Option 1:**
+  
+  - If you have ```SqlPackage.exe``` installed, then execute the following command, replace "C:\path-to\Spacex.Database.SqlDb.xml" with the actual file path and replace SpacexDB with your database name:
+```sh
+    SqlPackage.exe /Action:Publish /SourceFile:"Spacex/SpacexApp/Spacex.Database/Spacex.Database.SqlDb.xml" /TargetConnectionString:"data source=YOUR_SQL_SERVER;User Id=YOUR_USERNAME;Password=YOUR_PASSWORD;initial catalog=Spacex;TrustServerCertificate=True;MultipleActiveResultSets=True;"
+  ```
+
+ - **Option 2:**
+
+ - If you have **Visual Studio IDE** open the SpacexServer.sln on Visual Studio, and on Databases you will see ```Spacex.Database.SqlDb.xml```, click to the file, after that a window pop-up will be shown, add the database connection and click **Publish**.
+
+ - **Option 3:**
+
+ - In SpaceX/docker-compose folder there is `spacex-db.sql` file, after connecting the datatabse, run this query manually to create the required tables.
 
 **4.  Run the Backend:**
- - Modify **appsettings.json** which is in SpaceX/SpacexApp/SpacexServer.Api directory, Add JWT_SECRET in JwtSettings:Secret, it should have at least 32 byte, you can generate by running this command on your terminal: ```openssl rand -base64 32```
+ - Modify **appsettings.json** which is in SpaceX/SpacexApp/SpacexServer.Api directory, Add JWT_SECRET in ```JwtSettings:Secret```, it should have at least 32 byte, you can generate by running this command on your terminal: ```openssl rand -base64 32```
+ - The run the following commands:
+ - 
       ```sh
       cd SpaceX/SpacexApp/SpacexServer.Api
       dotnet restore
@@ -220,11 +235,12 @@ If these ports are already in use on your machine, you can change them as follow
     ```
 
 **5.  Run the Frontend:**
-      ```sh
-   cd SpaceX/SpacexApp/Spacex.Client/spacex-angular
-   npm install
-   ng serve --open
-    ```
+
+   ```sh
+    cd SpaceX/SpacexApp/Spacex.Client/spacex-angular
+    npm install
+    ng serve --open
+   ```
  
  **6. Test the application:**
 
