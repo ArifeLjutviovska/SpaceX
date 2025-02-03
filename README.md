@@ -1,6 +1,6 @@
-## 🚀 SpaceX Mission Tracker Application
+# 🚀 SpaceX Mission Tracker Application
 
-### Table of Contents
+## Table of Contents
 - [About This Project](#about-this-project)
 - [Technologies Used](#technologies-used)
 - [Features](#features)
@@ -13,16 +13,25 @@
 - [Contact](#contact)
 
 
-#### About This Project
+### About This Project
 This is a full-stack web application built with **Angular, .NET, and SQL** that allows users to view 
 SpaceX launches while handling **user authentication, profile management, and secure JWT authentication**.
 
-## Technologies Used
+### Technologies Used
 - **Frontend**: Angular (Latest)
 - **Backend**: .NET 8 Web API (C#)
 - **Database**: SQL Server (for local storage)
 - **Authentication**: JWT Tokens with HttpOnly Cookies
 - **Deployment**: Docker
+
+
+### Features
+✔️ User Signup & Login  
+✔️ Secure Authentication (JWT & Refresh Tokens)  
+✔️ SpaceX Launches (Latest, Past, Upcoming)  
+✔️ User Profile Management  
+✔️ Change & Reset Password  
+✔️ Responsive UI with Sidebar Navigation
 
 ## **📌 Steps to Clone and Setup the Project**
 ### **1️⃣ Clone the Repository**
