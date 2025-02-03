@@ -69,10 +69,8 @@ If you are already on SpaceX/docker-compose folder on your terminal, just run th
   ```sh
    docker-compose up --build
    ```
-**Encountering an issue?**
+**Note: Encountering an issue?**
 If you see an error like **"User Declined Directory Sharing"** while running the docker containers, [click here](#troubleshooting) for the fix.
-
-
 
 
 ###  Steps to get environment file
@@ -80,7 +78,6 @@ If you see an error like **"User Declined Directory Sharing"** while running the
 - Scroll down to the Artifacts section and download env-file.zip.
 - Extract the .zip file to get the .env file. (***Note:** You need to be logged in to github in order to download the file)
 - ![image](https://github.com/user-attachments/assets/4773379c-ee21-439b-9b65-03541ca8e63a)
-
 
 ### Troubleshooting
 ❌ **Error: "User Declined Directory Sharing"**
