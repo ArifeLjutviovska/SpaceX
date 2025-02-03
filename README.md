@@ -55,36 +55,36 @@ Before cloning the repository, make sure you have the following installed:
 
 
 ##  Setup & Installation with Docker
-  **1. Clone the Repository**
-  Open terminal and go to the folder that  you want to clone the project on your local machine. And run the following command:
+  **1. Clone the Repository: **
+    Open terminal and go to the folder that  you want to clone the project on your local machine. And run the following command:
    ```sh
    git clone https://github.com/ArifeLjutviovska/SpaceX.git
    ```
- **2. Navigate into the Project Directory**
- Run the following command on your terminal.
+ **2. Navigate into the Project Directory: **
+   Run the following command on your terminal.
  ```sh
    cd SpaceX
    ```
- **3. Download the .env File from GitHub Actions**
-Now you will see the project structure. You will see that on SpaceX folder we have docker-compose  folder. In order for application to run you need to have .env file on docker-compose folder.
+ **3. Download the .env File from GitHub Actions: **
+  Now you will see the project structure. You will see that on SpaceX folder we have docker-compose  folder. In order for application to run you need to have .env file on docker-compose folder.
 You can get the .env file by following these steps: [Steps to get environment file](#steps-to-get-environment-file)
 After successfull download of .env file,  Move the .env folder to SpaceX/docker-compose folder on the cloned project.
 
- **4. Start the Project Using Docker Compose**
- If you are on SpaceX folder run the following commands on your terminal:
+ **4. Start the Project Using Docker Compose: **
+  If you are on SpaceX folder run the following commands on your terminal:
   ```sh
    cd docker-compose
    docker-compose up --build
    ```
-If you are already on SpaceX/docker-compose folder on your terminal, just run the following command:
+  If you are already on SpaceX/docker-compose folder on your terminal, just run the following command:
   ```sh
    docker-compose up --build
    ```
-**Note: Encountering an issue?**
-If you see an error like **"User Declined Directory Sharing"** while running the docker containers, [click here](#troubleshooting) for the fix.
+**Note: Encountering an issue? **
+  If you see an error like **"User Declined Directory Sharing"** while running the docker containers, [click here](#troubleshooting) for the fix.
 
-**5. Test the application**
-You can test the application with these routes:
+**5. Test the application: **
+ You can test the application with these routes:
  - Frontend: http://localhost:4300
  - Backend API: http://localhost:7005
 
