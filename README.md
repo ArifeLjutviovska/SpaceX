@@ -35,10 +35,10 @@ This project follows best practices for security, scalability, and modularity in
 
 ##  Prerequisites
 Before cloning the repository, make sure you have the following installed:
-###1.  Prerequisites for running the application with docker:
+###Prerequisites for running the application with docker:
  - **Git**: [Git Download](https://git-scm.com/downloads)
  - **Docker**: [Docker Dekstop](https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/)
-###2.  Prerequisites for running the application locally:
+###Prerequisites for running the application locally:
  - **Git**: [Git Download](https://git-scm.com/downloads)
  - **Node.js**: [NodeJS Download](https://nodejs.org/en/download)
  - **Angular CLI**: ```npm install -g @angular/cli```
