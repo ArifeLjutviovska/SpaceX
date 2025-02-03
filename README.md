@@ -76,7 +76,7 @@ Before cloning the repository, make sure you have the following installed:
  
    - You will see that on SpaceX folder we have ```docker-compose```  folder. In order for application to run you need to have ```.env``` file on ```docker-compose``` folder.
    - You can get the ```.env``` file by following these steps: [Get Environment File](#get-environment-file)
-   - After successfull download of .env file, move the .env folder to ```SpaceX/docker-compose``` folder on the cloned project. The location of the ```.env``` should be on the same directory as ```.env.template```
+   - After successfull download of .env file, move the downloaded ```.env``` file to ```SpaceX/docker-compose``` folder on the cloned project. The location of the ```.env``` should be on the same directory as ```.env.template```
 
  **4. Start the Project Using Docker Compose:**
  
