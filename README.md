@@ -119,13 +119,13 @@ If you see an error like this:
  ```Error response from daemon: user declined directory sharing path-to-project\SpaceX\docker-compose\spacex-db.sql```
 It means **Docker Desktop needs permission** to access your project files.
 
-** Fix: Enable File Sharing in Docker Desktop**
+**Fix: Enable File Sharing in Docker Desktop**
 1. Open Docker Desktop.
 2. Go to Settings ⚙ → Resources → File Sharing.
 3. Click "Add" and select: ```path-to-the-cloned-project-on-your-local-machine/SpaceX```
 4. Click **"Apply & Restart"**.
 
-** Alternative Fix: Move the Project to Another Drive**
+**Alternative Fix: Move the Project to Another Drive**
 If you don’t want to enable file sharing:
 1. Move the project to another drive (e.g., `D:\SpaceX`).
 2. Open a terminal and navigate to the project:
@@ -148,12 +148,8 @@ If these ports are already in use on your machine, you can change them as follow
 **1. If you run the project locally:**
 
  **Frontend (Angular)**
-   - Modify **Program.cs** in SpacexServer.Api, check the bellow code, on the ``` .WithOrigins("http://localhost:4300", "http://localhost:4200")``` add the url with your new port
-   - Run Angular on a different port using:
-    ```sh
-    ng serve --port=4500
-    ```
-  Or you can change your port based on your preference.  
+   - Modify **Program.cs** in SpacexServer.Api, cfind the code: ``` .WithOrigins("http://localhost:4300", "http://localhost:4200")``` add the url with your new port
+   - Run Angular on a different port using: ``` ng serve --port=4500 ```  Or you can change your port based on your preference.  
    - Then access the frontend at http://localhost:4500
 
   **Backend API (.NET)**
@@ -168,10 +164,10 @@ If these ports are already in use on your machine, you can change them as follow
   **Frontend (Angular)**
    - Change ```EXPOSE 4300``` in Dockerfile on spacex-angular folder
    - Change **docker-compose.yml** which is in SpaceX/docker-compose folder, you will need to change the port for **SpacexServer.Client:** to the port you added in Dockerfile. Change the following code:
-    ```
-       ports:
+  ```sh
+         ports:
          - "4300:4300"
-    ```
+   ```
 
    **Backend API (.NET)**
      
@@ -179,10 +175,10 @@ If these ports are already in use on your machine, you can change them as follow
   - Change ```ASPNETCORE_URLS``` to some port rather then 7005
   - Modify **Program.cs** in SpacexServer.Api, find this code: ```options.ListenAnyIP(7005);``` and change it to your preffered port.
   - Change **docker-compose.yml** which is in SpaceX/docker-compose folder, you will need to change the port for **SpacexServer.Api:** to the port you added in launchSettings.json. Change the following code:
-    ```
-       ports:
+  ```sh
+         ports:
          - "7005:7005"
-    ```
+   ```
    
 
 
