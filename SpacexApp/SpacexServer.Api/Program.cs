@@ -43,11 +43,15 @@ namespace SpacexServer.Api
             builder.Services.AddScoped<ISpacexDbContext, SpacexDbContext>();
 
             var connectionStringTemplate = builder.Configuration.GetConnectionString("DefaultConnection");
+            string connectionString = connectionStringTemplate ?? string.Empty;
 
-            string connectionString = connectionStringTemplate
-                .Replace("${SQL_SERVER}", Environment.GetEnvironmentVariable("SQL_SERVER"))
-                .Replace("${DB_USERNAME}", Environment.GetEnvironmentVariable("DB_USERNAME"))
-                .Replace("${DB_PASSWORD}", Environment.GetEnvironmentVariable("DB_PASSWORD"));
+            if (connectionStringTemplate != null && connectionStringTemplate.Contains("${SQL_SERVER}"))
+            {
+                connectionString = connectionStringTemplate
+                        .Replace("${SQL_SERVER}", Environment.GetEnvironmentVariable("SQL_SERVER"))
+                        .Replace("${DB_USERNAME}", Environment.GetEnvironmentVariable("DB_USERNAME"))
+                        .Replace("${DB_PASSWORD}", Environment.GetEnvironmentVariable("DB_PASSWORD"));
+            }
 
             builder.Services.AddDbContext<SpacexDbContext>(options =>
                 options.UseSqlServer(connectionString));
