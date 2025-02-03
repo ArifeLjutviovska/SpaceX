@@ -127,7 +127,6 @@ If you are already on SpaceX/docker-compose folder on your terminal, just run th
  - Modify **appsettings.json** which is in SpaceX/SpacexApp/SpacexServer.Api directory, change the connection string with your database connection string
  - Modify **TargetConnectionString** in Spacex.Database.SqlDb.xml, which is in SpaceX/SpacexApp/Spacex.Database folder
  - Publish the database with those options:
-
    
    **a) Option 1:**
    
