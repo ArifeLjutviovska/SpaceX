@@ -91,19 +91,21 @@ If you see an error like this:
  ```Error response from daemon: user declined directory sharing path-to-project\SpaceX\docker-compose\spacex-db.sql```
 It means **Docker Desktop needs permission** to access your project files.
 
-** ✅ Fix: Enable File Sharing in Docker Desktop**
+** Fix: Enable File Sharing in Docker Desktop**
 1. Open Docker Desktop.
 2. Go to Settings ⚙ → Resources → File Sharing.
 3. Click "Add" and select: ```path-to-the-cloned-project-on-your-local-machine/SpaceX```
 4. Click **"Apply & Restart"**.
 
-** ✅ Alternative Fix: Move the Project to Another Drive**
+** Alternative Fix: Move the Project to Another Drive**
 If you don’t want to enable file sharing:
 1. Move the project to another drive (e.g., `D:\SpaceX`).
 2. Open a terminal and navigate to the project:
 ```cd D:\SpaceX```
 3. Run the docker containers:
    ```docker-compose up --build```
+
+    
 🚀 After this, Docker should start successfully!
 
 
