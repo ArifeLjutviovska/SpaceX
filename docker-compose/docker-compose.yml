@@ -38,7 +38,7 @@ services:
       
   SpacexServer.Client:
     container_name: spacex-client
-    image: spaces.client
+    image: spacex.client
     build:
       context: ../SpacexApp/Spacex.Client/spacex-angular
     ports:
