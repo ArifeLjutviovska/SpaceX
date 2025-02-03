@@ -1,6 +1,20 @@
-# 🚀 Spacex Project
+## 🚀 SpaceX Mission Tracker Application
 
-#  Spacex Project - Setup Guide
+### Table of Contents
+- [About This Project](#about-this-project)
+- [Technologies Used](#technologies-used)
+- [Features](#features)
+- [Setup & Installation](#setup--installation)
+- [Running the Application](#running-the-application)
+- [Docker Deployment](#docker-deployment)
+- [API Endpoints](#api-endpoints)
+- [Testing the Application](#testing-the-application)
+- [Future Improvements](#future-improvements)
+- [Contact](#contact)
+
+
+#### About This Project
+This is a full-stack web application built with **Angular, .NET, and SQL** that allows users to view SpaceX launches while handling **user authentication, profile management, and secure JWT authentication**.
 
 ## **📌 Steps to Clone and Setup the Project**
 ### **1️⃣ Clone the Repository**
