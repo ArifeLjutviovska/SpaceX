@@ -14,7 +14,15 @@
 
 
 #### About This Project
-This is a full-stack web application built with **Angular, .NET, and SQL** that allows users to view SpaceX launches while handling **user authentication, profile management, and secure JWT authentication**.
+This is a full-stack web application built with **Angular, .NET, and SQL** that allows users to view 
+SpaceX launches while handling **user authentication, profile management, and secure JWT authentication**.
+
+## Technologies Used
+- **Frontend**: Angular (Latest)
+- **Backend**: .NET 8 Web API (C#)
+- **Database**: SQL Server (for local storage)
+- **Authentication**: JWT Tokens with HttpOnly Cookies
+- **Deployment**: Docker
 
 ## **📌 Steps to Clone and Setup the Project**
 ### **1️⃣ Clone the Repository**
