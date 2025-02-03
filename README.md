@@ -38,15 +38,15 @@ Before cloning the repository, make sure you have the following installed:
 
 **1. Prerequisites for running the application with docker:**
 
-  - **Git**: [Git Download](https://git-scm.com/downloads)
-  - **Docker**: [Docker Dekstop](https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/)
+  - Git: [Git Download](https://git-scm.com/downloads)
+  - Docker: [Docker Dekstop](https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/)
     
 **2. Prerequisites for running the application locally:**   
-  - **Git**: [Git Download](https://git-scm.com/downloads)
-  - **Node.js**: [NodeJS Download](https://nodejs.org/en/download)
-  - **Angular CLI**: ```npm install -g @angular/cli```
- - **.NET SDK**: [Download .NET SDK](https://dotnet.microsoft.com/en-us/download)
-  - **SQL Server**: [SQL Server Download](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
+  - Git: [Git Download](https://git-scm.com/downloads)
+  - Node.js: [NodeJS Download](https://nodejs.org/en/download)
+  - Angular CLI: ```npm install -g @angular/cli```
+ - .NET SDK: [Download .NET SDK](https://dotnet.microsoft.com/en-us/download)
+  - SQL Server: [SQL Server Download](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
 
 
 
