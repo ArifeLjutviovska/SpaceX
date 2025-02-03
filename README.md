@@ -205,9 +205,14 @@ If these ports are already in use on your machine, you can change them as follow
  - Ensure SQL Server is running
  - Create  Database connection on SQL Server [click here](https://learn.microsoft.com/en-us/sql/relational-databases/databases/create-a-database?view=sql-server-ver16)
  - Modify **appsettings.json** which is in SpaceX/SpacexApp/SpacexServer.Api directory, change the connection string with your database connection string
- - Modify **appsettings.json** which is in SpaceX/SpacexApp/SpacexServer.Api directory, Add JWT_SECRET in JwtSettings:Secret, it should have at least 32 byte, you can generate by running this command on your terminal: ```openssl rand -base64 32```
+ - Modify **TargetConnectionString** in Spacex.Database.SqlDb.xml, which is in SpaceX/SpacexApp/Spacex.Database folder
+ - Then execute the following command:
+    ```sh
+   SqlPackage.exe /Action:Publish /SourceFile:"Spacex/SpacexApp/Spacex.Database/Spacex.Database.SqlDb.xml" /TargetConnectionString:"data source=YOUR_SQL_SERVER;User Id=YOUR_USERNAME;Password=YOUR_PASSWORD;initial catalog=Spacex;TrustServerCertificate=True;MultipleActiveResultSets=True;"
+   ```
 
 **4.  Run the Backend:**
+ - Modify **appsettings.json** which is in SpaceX/SpacexApp/SpacexServer.Api directory, Add JWT_SECRET in JwtSettings:Secret, it should have at least 32 byte, you can generate by running this command on your terminal: ```openssl rand -base64 32```
       ```sh
       cd SpaceX/SpacexApp/SpacexServer.Api
       dotnet restore
