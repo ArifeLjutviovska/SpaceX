@@ -25,6 +25,7 @@ This web application allows users to:
  -  Update their profile and change/reset password
  -  Logout securely
  -  Fully responsive design
+   
 This project follows best practices for security, scalability, and modularity in a .NET + Angular stack.
 SpaceX launches for showing to the user are get from this API: [SpaceX API](https://github.com/r-spacex/SpaceX-API)
 
@@ -64,16 +65,17 @@ Before cloning the repository, make sure you have the following installed:
    ```
  **2. Navigate into the Project Directory:**
  
-   - Run the following command on your terminal.
+   Run the following command on your terminal.
  ```sh
    cd SpaceX
    ```
   Now you will see the project structure.
+  
  **3. Download the .env File from GitHub Actions:**
  
-   You will see that on SpaceX folder we have docker-compose  folder. In order for application to run you need to have .env file on docker-compose folder.
-   You can get the .env file by following these steps: [Steps to get environment file](#steps-to-get-environment-file)
-  After successfull download of .env file,  Move the .env folder to SpaceX/docker-compose folder on the cloned project.
+   - You will see that on SpaceX folder we have docker-compose  folder. In order for application to run you need to have .env file on docker-compose folder.
+   - You can get the .env file by following these steps: [Steps to get environment file](#steps-to-get-environment-file)
+   - After successfull download of .env file,  Move the .env folder to SpaceX/docker-compose folder on the cloned project.
 
  **4. Start the Project Using Docker Compose:**
  
@@ -104,14 +106,14 @@ If you are already on SpaceX/docker-compose folder on your terminal, just run th
 
 
 
-### 📌 Steps to get environment file
+## 📌 Steps to get environment file
 - Go to this link which is link of the one of the successfull Actions on theese repository: 👉 [GitHub Actions](https://github.com/ArifeLjutviovska/SpaceX/actions/runs/13117986904)
 - Scroll down to the Artifacts section and download env-file.zip.
 - Extract the .zip file to get the .env file. (***Note:** You need to be logged in to github in order to download the file)
   ![image](https://github.com/user-attachments/assets/4773379c-ee21-439b-9b65-03541ca8e63a)  
 
 
-### 📌Troubleshooting
+## 📌Troubleshooting
 ❌ **Error: "User Declined Directory Sharing"**
 If you see an error like this:
  ```Error response from daemon: user declined directory sharing path-to-project\SpaceX\docker-compose\spacex-db.sql```
@@ -134,7 +136,7 @@ If you don’t want to enable file sharing:
     
 🚀 After this, Docker should start successfully!
 
-### 📌If Default Ports Are in Use
+## 📌If Default Ports Are in Use
 
 By default, the application runs on:
 
@@ -170,6 +172,7 @@ If these ports are already in use on your machine, you can change them as follow
        ports:
          - "4300:4300"
     ```
+
    **Backend API (.NET)**
      
   - Open Properties/launchSettings.json inside SpacexServer.Api.
@@ -202,26 +205,27 @@ If these ports are already in use on your machine, you can change them as follow
    ```
   Now you will see the project structure.
 
-  **3. Set up the database:**
+ **3. Set up the database:**
  - Ensure SQL Server is running
  - Create  Database connection on SQL Server [click here](https://learn.microsoft.com/en-us/sql/relational-databases/databases/create-a-database?view=sql-server-ver16)
  - Modify **appsettings.json** which is in SpaceX/SpacexApp/SpacexServer.Api directory, change the connection string with your database connection string
  - Modify **appsettings.json** which is in SpaceX/SpacexApp/SpacexServer.Api directory, Add JWT_SECRET in JwtSettings:Secret, it should have at least 32 byte, you can generate by running this command on your terminal: ```openssl rand -base64 32```
 
-   **4.  Run the Backend:**
+**4.  Run the Backend:**
       ```sh
-   cd SpaceX/SpacexApp/SpacexServer.Api
-   dotnet restore
-   dotnet run
-   ```
+      cd SpaceX/SpacexApp/SpacexServer.Api
+      dotnet restore
+      dotnet run
+    ```
 
-   **5.  Run the Frontend:**
+**5.  Run the Frontend:**
       ```sh
    cd SpaceX/SpacexApp/Spacex.Client/spacex-angular
    npm install
    ng serve --open
-   ```
-  **6. Test the application:**
+    ```
+ 
+ **6. Test the application:**
 
  You can test the application with these routes:
  - Frontend: http://localhost:4200
