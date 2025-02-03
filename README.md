@@ -1,6 +1,6 @@
 # 🚀 SpaceX Mission Tracker Application
 
-![image](https://github.com/user-attachments/assets/68d6fa7b-ee67-41c6-b92f-f0bb1ea0b5fd)
+![spacex](https://github.com/user-attachments/assets/5aed6e19-0e60-4ad8-815a-dbc4e4232f56)
 
 
 ## Table of Contents
