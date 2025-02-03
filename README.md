@@ -128,18 +128,18 @@ If you are already on SpaceX/docker-compose folder on your terminal, just run th
  - Modify **TargetConnectionString** in Spacex.Database.SqlDb.xml, which is in SpaceX/SpacexApp/Spacex.Database folder
  - Publish the database with those options: 
  
-   ###Option 1:
+   #### Option 1:
   
   - If you have ```SqlPackage.exe``` installed, then execute the following command, replace "C:\path-to\Spacex.Database.SqlDb.xml" with the actual file path and replace SpacexDB with your database name:
 ```sh
     SqlPackage.exe /Action:Publish /SourceFile:"Spacex/SpacexApp/Spacex.Database/Spacex.Database.SqlDb.xml" /TargetConnectionString:"data source=YOUR_SQL_SERVER;User Id=YOUR_USERNAME;Password=YOUR_PASSWORD;initial catalog=Spacex;TrustServerCertificate=True;MultipleActiveResultSets=True;"
   ```
 
-  ###Option 2:
+  #### Option 2:
 
  - If you have **Visual Studio IDE** open the SpacexServer.sln on Visual Studio, and on Databases you will see ```Spacex.Database.SqlDb.xml```, click to the file, after that a window pop-up will be shown, add the database connection and click **Publish**.
 
-   ###Option 3:
+   #### Option 3:
 
  - In SpaceX/docker-compose folder there is `spacex-db.sql` file, after connecting the datatabse, run this query manually to create the required tables.
 
