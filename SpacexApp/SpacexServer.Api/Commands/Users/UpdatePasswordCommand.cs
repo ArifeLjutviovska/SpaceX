@@ -53,6 +53,11 @@
                 return Result.Invalid("New password must have at least 8 characters, one uppercase, one lowercase, one number, and one special character.");
             }
 
+            if (PasswordHasher.VerifyPassword(command.Request.NewPassword, user.Password))
+            {
+                return Result.Invalid("New password cannot be the same as the current password.");
+            }
+
             string hashedPassword = PasswordHasher.HashPassword(command.Request.NewPassword);
             user.UpdatePassword(hashedPassword);
             await _userRepository.UpdateAsync(user);

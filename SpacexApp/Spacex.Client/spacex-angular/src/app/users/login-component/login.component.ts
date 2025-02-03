@@ -39,9 +39,9 @@ export class LoginComponent {
       disableClose: false
     }).afterClosed().subscribe(result => {
       if (result) {
-        this.router.navigate(['/reset-password'], { 
+        setTimeout(() => this.router.navigate(['/reset-password'], { 
           queryParams: { email: result } 
-        });
+        }), 4000);
       }
     });
   }
