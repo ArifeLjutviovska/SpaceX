@@ -98,6 +98,8 @@ If you are already on SpaceX/docker-compose folder on your terminal, just run th
  - Frontend: http://localhost:4300
  - Backend API: http://localhost:7005
 
+**NOTE:** If your local machine uses those ports for angular and backend (4300 or 7005) for some other processes, running the docker containers will fail. You can change the ports like this: [If Default Ports Are in Use](#if-default -ports-are-in-use)
+
 
 
 
@@ -131,6 +133,56 @@ If you don’t want to enable file sharing:
 
     
 🚀 After this, Docker should start successfully!
+
+### 📌If Default Ports Are in Use
+
+By default, the application runs on:
+
+- Frontend (Angular): On docker:  ```http://localhost:4300```, Locally:  ```http://localhost:4200```
+- Backend API (.NET): ```http://localhost:7005```
+  
+If these ports are already in use on your machine, you can change them as follows:
+
+**1. If you run the project locally:**
+
+ **Frontend (Angular)**
+   - Modify **Program.cs** in SpacexServer.Api, check the bellow code, on the ``` .WithOrigins("http://localhost:4300", "http://localhost:4200")``` add the url with your new port
+   - Run Angular on a different port using:
+    ```sh
+    ng serve --port=4500
+    ```
+  Or you can change your port based on your preference.  
+   - Then access the frontend at http://localhost:4500
+
+  **Backend API (.NET)**
+
+  - Open Properties/launchSettings.json inside SpacexServer.Api.
+  - Change ```ASPNETCORE_URLS``` to some port rather then 7005
+  - Modify **Program.cs** in SpacexServer.Api, find this code: ```options.ListenAnyIP(7005);``` and change it to your preffered port.
+  - Restart the backend and use http://localhost:{port-you applied-on-launchSetting.json}.
+
+**2. If you run the project on Docker:**
+
+  **Frontend (Angular)**
+   - Change ```EXPOSE 4300``` in Dockerfile on spacex-angular folder
+   - Change **docker-compose.yml** which is in SpaceX/docker-compose folder, you will need to change the port for **SpacexServer.Client:** to the port you added in Dockerfile. Change the following code:
+    ```
+       ports:
+         - "4300:4300"
+    ```
+   **Backend API (.NET)**
+     
+  - Open Properties/launchSettings.json inside SpacexServer.Api.
+  - Change ```ASPNETCORE_URLS``` to some port rather then 7005
+  - Modify **Program.cs** in SpacexServer.Api, find this code: ```options.ListenAnyIP(7005);``` and change it to your preffered port.
+  - Change **docker-compose.yml** which is in SpaceX/docker-compose folder, you will need to change the port for **SpacexServer.Api:** to the port you added in launchSettings.json. Change the following code:
+    ```
+       ports:
+         - "7005:7005"
+    ```
+   
+
+
 
 
 
@@ -174,6 +226,8 @@ If you don’t want to enable file sharing:
  You can test the application with these routes:
  - Frontend: http://localhost:4200
  - Backend API: http://localhost:7005
+
+**NOTE:** If your local machine uses those ports for angular and backend (4200 or 7005) for some other processes, running of the application will fail. You can change the ports like this: [If Default Ports Are in Use](#if-default -ports-are-in-use)
 
 
 ##  API Endpoints
