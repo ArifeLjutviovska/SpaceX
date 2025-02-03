@@ -100,7 +100,7 @@ If you are already on SpaceX/docker-compose folder on your terminal, just run th
  - Frontend: http://localhost:4300
  - Backend API: http://localhost:7005
 
-**NOTE:** If your local machine uses those ports for angular and backend (4300 or 7005) for some other processes, running the docker containers will fail. You can change the ports like this: [If Default Ports Are in Use](#if-default -ports-are-in-use)
+**NOTE:** If your local machine uses those ports for angular and backend (4300 or 7005) for some other processes, running the docker containers will fail. You can change the ports like this: [Default Ports In Use](#default-ports-in-use)
 
 
 
@@ -119,13 +119,13 @@ If you see an error like this:
  ```Error response from daemon: user declined directory sharing path-to-project\SpaceX\docker-compose\spacex-db.sql```
 It means **Docker Desktop needs permission** to access your project files.
 
-**Fix: Enable File Sharing in Docker Desktop**
+**a. Fix: Enable File Sharing in Docker Desktop**
 1. Open Docker Desktop.
 2. Go to Settings ⚙ → Resources → File Sharing.
 3. Click "Add" and select: ```path-to-the-cloned-project-on-your-local-machine/SpaceX```
 4. Click **"Apply & Restart"**.
 
-**Alternative Fix: Move the Project to Another Drive**
+**b. Alternative Fix: Move the Project to Another Drive**
 If you don’t want to enable file sharing:
 1. Move the project to another drive (e.g., `D:\SpaceX`).
 2. Open a terminal and navigate to the project:
@@ -136,7 +136,7 @@ If you don’t want to enable file sharing:
     
 🚀 After this, Docker should start successfully!
 
-## 📌If Default Ports Are in Use
+## 📌Default Ports In Use
 
 By default, the application runs on:
 
@@ -227,7 +227,7 @@ If these ports are already in use on your machine, you can change them as follow
  - Frontend: http://localhost:4200
  - Backend API: http://localhost:7005
 
-**NOTE:** If your local machine uses those ports for angular and backend (4200 or 7005) for some other processes, running of the application will fail. You can change the ports like this: [If Default Ports Are in Use](#if-default -ports-are-in-use)
+**NOTE:** If your local machine uses those ports for angular and backend (4200 or 7005) for some other processes, running of the application will fail. You can change the ports like this: [Default Ports In Use](#default-ports-in-use)
 
 
 ##  API Endpoints
