@@ -3,7 +3,7 @@
 ## Table of Contents
 - [About This Project](#about-this-project)
 - [Technologies Used](#technologies-used)
-- [Features](#features)
+- [Prerequisites](#prerequisites)
 - [Setup & Installation](#setup--installation)
 - [Running the Application](#running-the-application)
 - [Docker Deployment](#docker-deployment)
@@ -13,9 +13,20 @@
 - [Contact](#contact)
 
 
+
+
 ### About This Project
 This is a full-stack web application built with **Angular, .NET, and SQL** that allows users to view 
 SpaceX launches while handling **user authentication, profile management, and secure JWT authentication**.
+This web application allows users to:
+✅ Sign up and Log in securely using JWT with HttpOnly cookies
+✅ View SpaceX missions (Latest, Upcoming, and Past launches)
+✅ Update their profile and change/reset password
+✅ Logout securely
+✅ Fully responsive design
+
+This project follows best practices for security, scalability, and modularity in a .NET + Angular stack.
+
 
 ### Technologies Used
 - **Frontend**: Angular (Latest)
@@ -25,13 +36,17 @@ SpaceX launches while handling **user authentication, profile management, and se
 - **Deployment**: Docker
 
 
-### Features
-✔️ User Signup & Login  
-✔️ Secure Authentication (JWT & Refresh Tokens)  
-✔️ SpaceX Launches (Latest, Past, Upcoming)  
-✔️ User Profile Management  
-✔️ Change & Reset Password  
-✔️ Responsive UI with Sidebar Navigation
+
+###  Prerequisites
+Before cloning the repository, make sure you have the following installed:
+ - **Git**: [Git Download](https://git-scm.com/downloads)
+ - **Docker**: [Docker dekstop](https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/)
+
+###  Setup & Installation
+  **1. Clone the Repository**
+  Open terminal and go to the folder that  you want to clone the project on your local machine. And run the following command:
+      ```git clone https://github.com/ArifeLjutviovska/SpaceX.git```
+    
 
 ## **📌 Steps to Clone and Setup the Project**
 ### **1️⃣ Clone the Repository**
