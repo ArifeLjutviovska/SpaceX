@@ -8,6 +8,7 @@
 - [Technologies Used](#technologies-used)
 - [Prerequisites](#prerequisites)
 - [Setup & Installation With Docker](#setup--installation-with-docker)
+- [Setup & Installation On Local Machine](#setup--installation-on-local-machine)
 - [API Endpoints](#api-endpoints)
 - [Future Improvements](#future-improvements)
 - [Contact](#contact)
@@ -67,9 +68,10 @@ Before cloning the repository, make sure you have the following installed:
  ```sh
    cd SpaceX
    ```
+  Now you will see the project structure.
  **3. Download the .env File from GitHub Actions:**
  
-  - Now you will see the project structure. You will see that on SpaceX folder we have docker-compose  folder. In order for application to run you need to have .env file on docker-compose folder.
+   You will see that on SpaceX folder we have docker-compose  folder. In order for application to run you need to have .env file on docker-compose folder.
    You can get the .env file by following these steps: [Steps to get environment file](#steps-to-get-environment-file)
   After successfull download of .env file,  Move the .env folder to SpaceX/docker-compose folder on the cloned project.
 
@@ -132,6 +134,46 @@ If you don’t want to enable file sharing:
 
 
 
+##  Setup & Installation On Local Machine
+
+  **1. Clone the Repository:**
+  
+   Open terminal and go to the folder that  you want to clone the project on your local machine. And run the following command:
+   ```sh
+   git clone https://github.com/ArifeLjutviovska/SpaceX.git
+   ```
+ **2. Navigate into the Project Directory:**
+ 
+   - Run the following command on your terminal.
+ ```sh
+   cd SpaceX
+   ```
+  Now you will see the project structure.
+
+  **3. Set up the database:**
+ - Ensure SQL Server is running
+ - Create  Database connection on SQL Server [click here](https://learn.microsoft.com/en-us/sql/relational-databases/databases/create-a-database?view=sql-server-ver16)
+ - Modify **appsettings.json** which is in SpaceX/SpacexApp/SpacexServer.Api directory, change the connection string with your database connection string
+ - Modify **appsettings.json** which is in SpaceX/SpacexApp/SpacexServer.Api directory, Add JWT_SECRET in JwtSettings:Secret, it should have at least 32 byte, you can generate by running this command on your terminal: ```openssl rand -base64 32```
+
+   **4.  Run the Backend:**
+      ```sh
+   cd SpaceX/SpacexApp/SpacexServer.Api
+   dotnet restore
+   dotnet run
+   ```
+
+   **5.  Run the Frontend:**
+      ```sh
+   cd SpaceX/SpacexApp/Spacex.Client/spacex-angular
+   npm install
+   ng serve --open
+   ```
+  **6. Test the application:**
+
+ You can test the application with these routes:
+ - Frontend: http://localhost:4200
+ - Backend API: http://localhost:7005
 
 
 ##  API Endpoints
