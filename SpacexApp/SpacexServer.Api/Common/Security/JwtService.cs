@@ -81,6 +81,5 @@
             }
             return Convert.ToBase64String(randomBytes);
         }
-
     }
 }

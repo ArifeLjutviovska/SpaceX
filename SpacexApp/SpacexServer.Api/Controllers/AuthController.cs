@@ -34,8 +34,7 @@
         [SwaggerResponse((int)HttpStatusCode.BadRequest, "Invalid request data.")]
         public async Task<IActionResult> RegisterUserAsync([FromBody] SignUpUserRequest request)
         {
-            Result result = await _commandDispatcher.ExecuteAsync(new SignUpUserCommand(request));
-            return OkOrError(result);
+            return OkOrError(await _commandDispatcher.ExecuteAsync(new SignUpUserCommand(request)));
         }
 
         /// <summary>
@@ -49,73 +48,19 @@
         [SwaggerResponse((int)HttpStatusCode.Unauthorized, "Invalid email or password.")]
         public async Task<IActionResult> LoginUserAsync([FromBody] LoginRequest request)
         {
-            Result<LoginUserResponse> result = await _commandDispatcher.ExecuteAsync(new LoginUserCommand(request));
-
-            if (result.IsFailure)
-            {
-                return OkOrError(Result.Unauthorized("Invalid email or password."));
-            }
-           
-            var accessTokenCookieOptions = new CookieOptions
-            {
-                HttpOnly = true,
-                Secure = false,
-                SameSite = SameSiteMode.Strict,
-                Path = "/",
-                Expires = DateTime.UtcNow.AddMinutes(15)
-            };
-
-            var refreshTokenCookieOptions = new CookieOptions
-            {
-                HttpOnly = true,
-                Secure = false,
-                SameSite = SameSiteMode.Strict,
-                Path = "/",
-                Expires = DateTime.UtcNow.AddDays(7)
-            };
-
-            Response.Cookies.Append("accessToken", result.Value.AccessToken, accessTokenCookieOptions);
-            Response.Cookies.Append("refreshToken", result.Value.RefreshToken, refreshTokenCookieOptions);
-            return OkOrError(Result.Ok());
+            return OkOrError(await _commandDispatcher.ExecuteAsync(new LoginUserCommand(request)));
         }
 
         /// <summary>
         /// Refreshes an expired JWT access token using a valid refresh token.
         /// </summary>
-        /// <param name="request">The refresh token request.</param>
-        /// <returns>A new access token and refresh token if the provided refresh token is valid.</returns>
         [HttpPost("refresh-token")]
         [SwaggerOperation(Summary = "Refreshes an expired JWT access token.")]
-        [SwaggerResponse((int)HttpStatusCode.OK, "Token refreshed successfully.", typeof(Result<LoginUserResponse>))]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Token refreshed successfully.", typeof(Result))]
         [SwaggerResponse((int)HttpStatusCode.Unauthorized, "Invalid or expired refresh token.")]
         public async Task<IActionResult> RefreshToken()
         {
-            string? refreshToken = Request.Cookies["RefreshToken"];
-
-            if (string.IsNullOrEmpty(refreshToken))
-            {
-                return OkOrError(Result.Unauthorized("No refresh token found."));
-            }
-
-            Result<LoginUserResponse> result = await _commandDispatcher.ExecuteAsync(new RefreshTokenCommand(new(){ RefreshToken = refreshToken }));
-
-            if (!result.IsSuccess)
-            {
-                return OkOrError(Result.Unauthorized("No refresh token found."));
-            }
-
-            var newAccessTokenCookieOptions = new CookieOptions
-            {
-                HttpOnly = true,
-                Secure = false,
-                SameSite = SameSiteMode.Strict,
-                Path = "/",
-                Expires = DateTime.UtcNow.AddMinutes(15)
-            };
-
-            Response.Cookies.Append("accessToken", result.Value.AccessToken, newAccessTokenCookieOptions);
-
-            return Ok(result);
+            return OkOrError(await _commandDispatcher.ExecuteAsync(new RefreshTokenCommand()));
         }
 
         /// <summary>
@@ -125,23 +70,14 @@
         /// <returns>A response indicating success or failure of the password update.</returns>
         [HttpPut("update-password")]
         [Authorize]
-        [SwaggerOperation(Summary = "Updates the user's password.", Description = "Requires current password verification.")]
+        [SwaggerOperation(Summary = "Updates the user's password.")]
         [SwaggerResponse((int)HttpStatusCode.OK, "Password updated successfully.", typeof(Result))]
         [SwaggerResponse((int)HttpStatusCode.Unauthorized, "Unauthorized request.")]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, "Invalid request.")]
         public async Task<IActionResult> UpdatePasswordAsync([FromBody] UpdatePasswordRequest request)
         {
-            string? email = User.FindFirstValue(ClaimTypes.Email);
-
-            if (string.IsNullOrEmpty(email))
-            {
-                return Unauthorized(Result.Failed("Unauthorized request."));
-            }
-
-            request.Email = email;
-            var result = await _commandDispatcher.ExecuteAsync(new UpdatePasswordCommand(request));
-
-            return OkOrError(result);
+            request.Email = User.FindFirstValue(ClaimTypes.Email) ?? string.Empty;
+            return OkOrError(await _commandDispatcher.ExecuteAsync(new UpdatePasswordCommand(request)));
         }
 
         /// <summary>
@@ -150,15 +86,12 @@
         /// <param name="request">The request containing the user's email.</param>
         /// <returns>A response indicating whether the email exists and if the user can proceed with password reset.</returns>
         [HttpPut("forgot-password")]
-        [SwaggerOperation(Summary = "Validates the email.", Description = "Requires email verification.")]
+        [SwaggerOperation(Summary = "Validates the email for password reset.")]
         [SwaggerResponse((int)HttpStatusCode.OK, "Email verified successfully.", typeof(Result))]
-        [SwaggerResponse((int)HttpStatusCode.Unauthorized, "Unauthorized request.")]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, "Invalid request.")]
         public async Task<IActionResult> ForgotPasswordAsync([FromBody] ForgotPasswordRequest request)
         {
-            var result = await _commandDispatcher.ExecuteAsync(new ForgotPasswordCommand(request));
-
-            return OkOrError(result);
+            return OkOrError(await _commandDispatcher.ExecuteAsync(new ForgotPasswordCommand(request)));
         }
 
         /// <summary>
@@ -167,22 +100,62 @@
         /// <param name="request">Request containing the new password and user email verification.</param>
         /// <returns>A response indicating whether the password reset was successful.</returns>
         [HttpPut("reset-password")]
-        [SwaggerOperation(Summary = "Resets the user's password.", Description = "Requires email verification.")]
+        [SwaggerOperation(Summary = "Resets the user's password.")]
         [SwaggerResponse((int)HttpStatusCode.OK, "Password updated successfully.", typeof(Result))]
-        [SwaggerResponse((int)HttpStatusCode.Unauthorized, "Unauthorized request.")]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, "Invalid request.")]
         public async Task<IActionResult> ResetPasswordAsync([FromBody] ResetPasswordRequest request)
         {
-            var result = await _commandDispatcher.ExecuteAsync(new ResetPasswordCommand(request));
-
-            return OkOrError(result);
+            return OkOrError(await _commandDispatcher.ExecuteAsync(new ResetPasswordCommand(request)));
         }
 
+        /// <summary>
+        /// Retrieves the currently logged-in user.
+        /// </summary>
+        [HttpGet("current-user")]
+        [Authorize]
+        [SwaggerOperation(Summary = "Retrieves the currently logged-in user.")]
+        [SwaggerResponse((int)HttpStatusCode.OK, "User data retrieved successfully.", typeof(Result<CurrentUserResponse>))]
+        [SwaggerResponse((int)HttpStatusCode.Unauthorized, "Unauthorized request.")]
+        public IActionResult GetCurrentUser()
+        {
+            CurrentUserResponse user = new()
+            {
+                FirstName = User.FindFirst("firstName")?.Value ?? "",
+                LastName = User.FindFirst("lastName")?.Value ?? "",
+                Email = User.FindFirst(ClaimTypes.Email)?.Value ?? ""
+            };
+
+            return OkOrError(Result.Ok(user));
+        }
+
+        /// <summary>
+        /// Verifies if the user's session is still valid.
+        /// </summary>
+        [HttpGet("verify-session")]
+        [Authorize]
+        [SwaggerOperation(Summary = "Verifies if the user's session is still valid.")]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Session is valid.")]
+        [SwaggerResponse((int)HttpStatusCode.Unauthorized, "Session expired.")]
+        public IActionResult VerifySession()
+        {
+            if (string.IsNullOrEmpty(Request.Cookies["accessToken"]))
+            {
+                return OkOrError(Result.Failed("Session expired."));
+            }
+
+            return OkOrError(Result.Ok("Session is valid."));
+        }
+
+        /// <summary>
+        /// Logs out a user by clearing JWT cookies.
+        /// </summary>
         [HttpPost("logout")]
         [Authorize]
+        [SwaggerOperation(Summary = "Logs out a user.")]
+        [SwaggerResponse((int)HttpStatusCode.OK, "User logged out successfully.")]
         public IActionResult Logout()
         {
-            var cookieOptions = new CookieOptions
+            CookieOptions cookieOptions = new()
             {
                 HttpOnly = true,
                 Secure = false,
@@ -194,36 +167,7 @@
             Response.Cookies.Append("accessToken", "", cookieOptions);
             Response.Cookies.Append("refreshToken", "", cookieOptions);
 
-            return Ok(Result.Ok("Logged out successfully."));
+            return OkOrError(Result.Ok("Logged out successfully."));
         }
-
-        [HttpGet("current-user")]
-        [Authorize]
-        public IActionResult GetCurrentUser()
-        {
-            var user = new
-            {
-                FirstName = User.FindFirst("firstName")?.Value,
-                LastName = User.FindFirst("lastName")?.Value,
-                Email = User.FindFirst(ClaimTypes.Email)?.Value
-            };
-
-            return OkOrError(Result.Ok(user));
-        }
-
-        [HttpGet("verify-session")]
-        [Authorize]
-        public IActionResult VerifySession()
-        {
-            string? accessToken = Request.Cookies["accessToken"];
-
-            if (string.IsNullOrEmpty(accessToken))
-            {
-                return Unauthorized(Result.Failed("Session expired."));
-            }
-
-            return Ok(Result.Ok("Session is valid."));
-        }
-
     }
 }

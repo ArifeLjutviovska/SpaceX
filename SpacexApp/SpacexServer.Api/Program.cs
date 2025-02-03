@@ -13,7 +13,6 @@ namespace SpacexServer.Api
     using SpacexServer.Api.Common.Security;
     using SpacexServer.Api.Contracts.SpacexLaunches.Responses;
     using SpacexServer.Api.Contracts.SpacexLaunches.Services;
-    using SpacexServer.Api.Contracts.Users.Responses;
     using SpacexServer.Storage.Common.Context;
     using SpacexServer.Storage.RefreshTokens.Repositories;
     using SpacexServer.Storage.Users.Repositories;
@@ -39,6 +38,7 @@ namespace SpacexServer.Api
             builder.Services.AddTransient<IQueryDispatcher, QueryDispatcher>();
             builder.Services.AddHttpClient<SpaceXLaunchService>();
             builder.Services.AddMemoryCache();
+            builder.Services.AddHttpContextAccessor();
 
             builder.Services.AddScoped<ISpacexDbContext, SpacexDbContext>();
 
@@ -56,8 +56,8 @@ namespace SpacexServer.Api
             builder.Services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
 
             builder.Services.AddTransient<ICommandHandler<SignUpUserCommand, Result>, SignUpUserCommandHandler>();
-            builder.Services.AddTransient<ICommandHandler<LoginUserCommand, Result<LoginUserResponse>>, LoginUserCommandHandler>();
-            builder.Services.AddTransient<ICommandHandler<RefreshTokenCommand, Result<LoginUserResponse>>, RefreshTokenCommandHandler>();
+            builder.Services.AddTransient<ICommandHandler<LoginUserCommand, Result>, LoginUserCommandHandler>();
+            builder.Services.AddTransient<ICommandHandler<RefreshTokenCommand, Result>, RefreshTokenCommandHandler>();
             builder.Services.AddTransient<ICommandHandler<UpdatePasswordCommand, Result>, UpdatePasswordCommandHandler>();
             builder.Services.AddTransient<ICommandHandler<ForgotPasswordCommand, Result>, ForgotPasswordCommandHandler>();
             builder.Services.AddTransient<ICommandHandler<ResetPasswordCommand, Result>, ResetPasswordCommandHandler>();

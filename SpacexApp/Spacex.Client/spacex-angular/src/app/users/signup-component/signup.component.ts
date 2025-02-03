@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl, ReactiveFormsModule } from '@angular/forms';
-import { LoginResponse, Result, SignUpRequest } from '../../models/spacex.models';
+import {  Result, SignUpRequest } from '../../models/spacex.models';
 import { AuthService  } from '../../services/auth.service';
 import { catchError, mergeMap, of } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
