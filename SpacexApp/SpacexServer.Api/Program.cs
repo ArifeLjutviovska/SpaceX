@@ -109,7 +109,7 @@ namespace SpacexServer.Api
             var app = builder.Build();
 
             app.UseCors(policy => policy
-                .WithOrigins("http://localhost:4300", "http://localhost:4400")
+                .WithOrigins("http://localhost:4300", "http://localhost:4200")
                 .AllowCredentials()
                 .AllowAnyMethod()
                 .AllowAnyHeader());
