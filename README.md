@@ -77,7 +77,7 @@ If you see an error like **"User Declined Directory Sharing"** while running the
 - Go to this link which is link of the one of the successfull Actions on theese repository: 👉 [GitHub Actions](https://github.com/ArifeLjutviovska/SpaceX/actions/runs/13117986904)
 - Scroll down to the Artifacts section and download env-file.zip.
 - Extract the .zip file to get the .env file. (***Note:** You need to be logged in to github in order to download the file)
-- ![image](https://github.com/user-attachments/assets/4773379c-ee21-439b-9b65-03541ca8e63a)
+  ![image](https://github.com/user-attachments/assets/4773379c-ee21-439b-9b65-03541ca8e63a)
 
 ### Troubleshooting
 ❌ **Error: "User Declined Directory Sharing"**
