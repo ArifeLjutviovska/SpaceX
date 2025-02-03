@@ -105,6 +105,72 @@ If you are already on SpaceX/docker-compose folder on your terminal, just run th
 
 
 
+##  Setup & Installation On Local Machine
+
+  **1. Clone the Repository:**
+  
+   Open terminal and go to the folder that  you want to clone the project on your local machine. And run the following command:
+   ```sh
+   git clone https://github.com/ArifeLjutviovska/SpaceX.git
+   ```
+ **2. Navigate into the Project Directory:**
+ 
+   - Run the following command on your terminal.
+ ```sh
+   cd SpaceX
+   ```
+  Now you will see the project structure.
+
+ **3. Set up the database:**
+ - Ensure SQL Server is running
+ - Create  Database connection on SQL Server [click here](https://learn.microsoft.com/en-us/sql/relational-databases/databases/create-a-database?view=sql-server-ver16)
+ - Modify **appsettings.json** which is in SpaceX/SpacexApp/SpacexServer.Api directory, change the connection string with your database connection string
+ - Modify **TargetConnectionString** in Spacex.Database.SqlDb.xml, which is in SpaceX/SpacexApp/Spacex.Database folder
+ - Publish the database with those options: 
+ 
+   ####Option 1:
+  
+  - If you have ```SqlPackage.exe``` installed, then execute the following command, replace "C:\path-to\Spacex.Database.SqlDb.xml" with the actual file path and replace SpacexDB with your database name:
+```sh
+    SqlPackage.exe /Action:Publish /SourceFile:"Spacex/SpacexApp/Spacex.Database/Spacex.Database.SqlDb.xml" /TargetConnectionString:"data source=YOUR_SQL_SERVER;User Id=YOUR_USERNAME;Password=YOUR_PASSWORD;initial catalog=Spacex;TrustServerCertificate=True;MultipleActiveResultSets=True;"
+  ```
+
+  ####Option 2:
+
+ - If you have **Visual Studio IDE** open the SpacexServer.sln on Visual Studio, and on Databases you will see ```Spacex.Database.SqlDb.xml```, click to the file, after that a window pop-up will be shown, add the database connection and click **Publish**.
+
+   ####Option 3:
+
+ - In SpaceX/docker-compose folder there is `spacex-db.sql` file, after connecting the datatabse, run this query manually to create the required tables.
+
+**4.  Run the Backend:**
+ - Modify **appsettings.json** which is in SpaceX/SpacexApp/SpacexServer.Api directory, Add JWT_SECRET in ```JwtSettings:Secret```, it should have at least 32 byte, you can generate by running this command on your terminal: ```openssl rand -base64 32```
+ - The run the following commands:
+   
+      ```sh
+      cd SpaceX/SpacexApp/SpacexServer.Api
+      dotnet restore
+      dotnet run
+    ```
+
+**5.  Run the Frontend:**
+
+   ```sh
+    cd SpaceX/SpacexApp/Spacex.Client/spacex-angular
+    npm install
+    ng serve --open
+   ```
+ 
+ **6. Test the application:**
+
+ You can test the application with these routes:
+ - Frontend: http://localhost:4200
+ - Backend API: http://localhost:7005
+
+**NOTE:** If your local machine uses those ports for angular and backend (4200 or 7005) for some other processes, running of the application will fail. You can change the ports like this: [Default Ports In Use](#default-ports-in-use)
+
+
+
 
 
 ## 📌Get Environment File
@@ -183,72 +249,6 @@ If these ports are already in use on your machine, you can change them as follow
    
 
 
-
-
-
-##  Setup & Installation On Local Machine
-
-  **1. Clone the Repository:**
-  
-   Open terminal and go to the folder that  you want to clone the project on your local machine. And run the following command:
-   ```sh
-   git clone https://github.com/ArifeLjutviovska/SpaceX.git
-   ```
- **2. Navigate into the Project Directory:**
- 
-   - Run the following command on your terminal.
- ```sh
-   cd SpaceX
-   ```
-  Now you will see the project structure.
-
- **3. Set up the database:**
- - Ensure SQL Server is running
- - Create  Database connection on SQL Server [click here](https://learn.microsoft.com/en-us/sql/relational-databases/databases/create-a-database?view=sql-server-ver16)
- - Modify **appsettings.json** which is in SpaceX/SpacexApp/SpacexServer.Api directory, change the connection string with your database connection string
- - Modify **TargetConnectionString** in Spacex.Database.SqlDb.xml, which is in SpaceX/SpacexApp/Spacex.Database folder
- - Publish the database with those options: 
- 
-  - **Option 1:**
-  
-  - If you have ```SqlPackage.exe``` installed, then execute the following command, replace "C:\path-to\Spacex.Database.SqlDb.xml" with the actual file path and replace SpacexDB with your database name:
-```sh
-    SqlPackage.exe /Action:Publish /SourceFile:"Spacex/SpacexApp/Spacex.Database/Spacex.Database.SqlDb.xml" /TargetConnectionString:"data source=YOUR_SQL_SERVER;User Id=YOUR_USERNAME;Password=YOUR_PASSWORD;initial catalog=Spacex;TrustServerCertificate=True;MultipleActiveResultSets=True;"
-  ```
-
- - **Option 2:**
-
- - If you have **Visual Studio IDE** open the SpacexServer.sln on Visual Studio, and on Databases you will see ```Spacex.Database.SqlDb.xml```, click to the file, after that a window pop-up will be shown, add the database connection and click **Publish**.
-
- - **Option 3:**
-
- - In SpaceX/docker-compose folder there is `spacex-db.sql` file, after connecting the datatabse, run this query manually to create the required tables.
-
-**4.  Run the Backend:**
- - Modify **appsettings.json** which is in SpaceX/SpacexApp/SpacexServer.Api directory, Add JWT_SECRET in ```JwtSettings:Secret```, it should have at least 32 byte, you can generate by running this command on your terminal: ```openssl rand -base64 32```
- - The run the following commands:
- - 
-      ```sh
-      cd SpaceX/SpacexApp/SpacexServer.Api
-      dotnet restore
-      dotnet run
-    ```
-
-**5.  Run the Frontend:**
-
-   ```sh
-    cd SpaceX/SpacexApp/Spacex.Client/spacex-angular
-    npm install
-    ng serve --open
-   ```
- 
- **6. Test the application:**
-
- You can test the application with these routes:
- - Frontend: http://localhost:4200
- - Backend API: http://localhost:7005
-
-**NOTE:** If your local machine uses those ports for angular and backend (4200 or 7005) for some other processes, running of the application will fail. You can change the ports like this: [Default Ports In Use](#default-ports-in-use)
 
 
 ##  API Endpoints
