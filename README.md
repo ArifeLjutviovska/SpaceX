@@ -19,11 +19,11 @@
 This is a full-stack web application built with **Angular, .NET, and SQL** that allows users to view 
 SpaceX launches while handling **user authentication, profile management, and secure JWT authentication**.
 This web application allows users to:
-✅ Sign up and Log in securely using JWT with HttpOnly cookies
-✅ View SpaceX missions (Latest, Upcoming, and Past launches)
-✅ Update their profile and change/reset password
-✅ Logout securely
-✅ Fully responsive design
+ -  Sign up and Log in securely using JWT with HttpOnly cookies
+ -  View SpaceX missions (Latest, Upcoming, and Past launches)
+ -  Update their profile and change/reset password
+ -  Logout securely
+ -  Fully responsive design
 
 This project follows best practices for security, scalability, and modularity in a .NET + Angular stack.
 
@@ -45,7 +45,9 @@ Before cloning the repository, make sure you have the following installed:
 ###  Setup & Installation
   **1. Clone the Repository**
   Open terminal and go to the folder that  you want to clone the project on your local machine. And run the following command:
-      ```git clone https://github.com/ArifeLjutviovska/SpaceX.git```
+      ```
+      git clone https://github.com/ArifeLjutviovska/SpaceX.git
+      ```
     
 
 ## **📌 Steps to Clone and Setup the Project**
