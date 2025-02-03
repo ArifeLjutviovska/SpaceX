@@ -70,12 +70,13 @@ export class LoginComponent {
     };
   
     this.authService.login(request).pipe(
-      mergeMap((result: Result<LoginResponse>) => {
+      mergeMap((result: Result<void>) => {
         if (result.isSuccess) {
           this.showSuccess('Login successful! Redirecting...');
-          setTimeout(() => this.router.navigate(['/dashboard']), 2000);
+          localStorage.setItem("isAuthenticated", "true");
+          setTimeout(() => this.router.navigate(['/dashboard/profile']), 2000);
         } else {
-          throw new Error(result?.message || 'Login failed.');
+          this.showError(result?.message ?? "Login failed.");
         }
         return of(null);
       }),

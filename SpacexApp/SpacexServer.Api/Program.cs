@@ -83,8 +83,21 @@ namespace SpacexServer.Api
                         ValidateIssuerSigningKey = true,
                         ValidIssuer = jwtSettings["Issuer"],
                         ValidAudience = jwtSettings["Audience"],
-                        ClockSkew = TimeSpan.Zero,
                         IssuerSigningKey = new SymmetricSecurityKey(key),
+                    };
+
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnMessageReceived = ctx =>
+                        {
+                            ctx.Request.Cookies.TryGetValue("accessToken", out var accessToken);
+                            if (!string.IsNullOrEmpty(accessToken))
+                            {
+                                ctx.Token = accessToken;
+                            }
+
+                            return Task.CompletedTask;
+                        }
                     };
                 });
 
@@ -95,10 +108,11 @@ namespace SpacexServer.Api
 
             var app = builder.Build();
 
-            app.UseCors(x => x
-               .AllowAnyOrigin()
-               .AllowAnyMethod()
-               .AllowAnyHeader());
+            app.UseCors(policy => policy
+                .WithOrigins("http://localhost:4300", "http://localhost:4400")
+                .AllowCredentials()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
 
             if (app.Environment.IsDevelopment())
             {
@@ -108,8 +122,6 @@ namespace SpacexServer.Api
 
             app.UseAuthentication();
             app.UseAuthorization();
-
-
 
             app.MapControllers();
 

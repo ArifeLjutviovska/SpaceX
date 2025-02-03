@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { CurrentUserResponse } from '../../models/spacex.models';
 
 @Component({
   selector: 'app-profile',
@@ -8,12 +9,22 @@ import { Router } from '@angular/router';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  user: { firstName: string; lastName: string; email: string } | null = null;
+  user: CurrentUserResponse | null = null;
 
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
-    this.user = this.authService.getCurrentUser();
+    this.authService.getCurrentUser().subscribe(user => {
+      if (user) {
+        this.user = {
+          firstName: user.value.firstName ?? '',
+          lastName: user.value.lastName ?? '',
+          email: user.value.email ?? ''
+        };
+      } else {
+        this.user = null;
+      }
+    });
   }
 
   navigateToChangePassword() {

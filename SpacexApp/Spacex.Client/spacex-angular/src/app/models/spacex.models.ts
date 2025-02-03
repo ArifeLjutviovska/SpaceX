@@ -30,6 +30,11 @@ export interface Result<T> {
     newPassword: string;
   }
 
+  export interface CurrentUserResponse {
+    firstName: string;
+    lastName: string;
+    email: string;
+  }
   export interface ResetPasswordRequest{
     email: string;
     newPassword: string;

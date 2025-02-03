@@ -1,4 +1,7 @@
 ﻿namespace SpacexServer.Api.Contracts.RefreshTokens.Requests
 {
-    public record RefreshTokenRequest(string RefreshToken);
+    public class RefreshTokenRequest
+    {
+        public string RefreshToken { get; set; } = string.Empty;
+    }
 }

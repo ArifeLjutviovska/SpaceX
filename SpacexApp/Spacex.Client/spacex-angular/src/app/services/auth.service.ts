@@ -1,9 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, tap } from "rxjs";
-import { Result, SignUpRequest, LoginRequest, LoginResponse,  UpdatePasswordRequest, ResetPasswordRequest } from "../models/spacex.models";
+import { catchError, map, Observable, of, tap, throwError } from "rxjs";
+import { Result, SignUpRequest, LoginRequest,  UpdatePasswordRequest, ResetPasswordRequest, CurrentUserResponse } from "../models/spacex.models";
 import { ToastrService } from "ngx-toastr";
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { Router } from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -11,74 +11,75 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class AuthService {
 
   private baseApiUrl: string = "http://localhost:7005/api/auth";
-  private jwtHelper = new JwtHelperService();
 
-  constructor(private httpService: HttpClient, private toastr: ToastrService){}
+  constructor(private httpService: HttpClient, private toastr: ToastrService, private router: Router){}
 
   public signUp(user: SignUpRequest): Observable<Result<void>> {
-    return this.httpService.post<Result<void>>(`${this.baseApiUrl}/signup`, user);
+    return this.httpService.post<Result<void>>(`${this.baseApiUrl}/signup`, user, { withCredentials: true });
   }
-
-  public login(user: LoginRequest): Observable<Result<LoginResponse>> {
-    return this.httpService.post<Result<LoginResponse>>(`${this.baseApiUrl}/login`, user).pipe(
-      tap(response => {
-        if (response.isSuccess) {
-          localStorage.setItem('accessToken', response.value.accessToken);
-          localStorage.setItem('refreshToken', response.value.refreshToken);
-        }
-      })
-    );
+  public login(user: LoginRequest): Observable<Result<void>> {
+    return this.httpService.post<Result<void>>(`${this.baseApiUrl}/login`, user, { withCredentials: true });
   }
-
-  public refreshToken(): Observable<Result<LoginResponse>> {
-    const refreshToken = localStorage.getItem('refreshToken');
-    return this.httpService.post<Result<LoginResponse>>(`${this.baseApiUrl}/refresh-token`, { refreshToken }).pipe(
-      tap(response => {
-        if (response.isSuccess) {
-          localStorage.setItem('accessToken', response.value.accessToken);
-          localStorage.setItem('refreshToken', response.value.refreshToken);
-        }
-      })
-    );
+ 
+  public refreshToken(): Observable<Result<void>> {
+    return this.httpService.post<Result<void>>(`${this.baseApiUrl}/refresh-token`, {}, { withCredentials: true });
   }
 
   updatePassword(data: UpdatePasswordRequest): Observable<Result<void>> {
-    return this.httpService.put<Result<void>>(`${this.baseApiUrl}/update-password`, data);
+    return this.httpService.put<Result<void>>(`${this.baseApiUrl}/update-password`, data, { withCredentials: true });
   }
   
   resetPassword(data: ResetPasswordRequest): Observable<Result<void>> {
-    return this.httpService.put<Result<void>>(`${this.baseApiUrl}/reset-password`, data);
+    return this.httpService.put<Result<void>>(`${this.baseApiUrl}/reset-password`, data, { withCredentials: true });
   }
 
-  getCurrentUser(): { firstName: string; lastName: string; email: string } | null {
-    const token = this.getAccessToken();
-    if (!token || this.jwtHelper.isTokenExpired(token)) {
-      return null; 
-    }
-    try {
-      const decodedToken: any = this.jwtHelper.decodeToken(token);
-      return {
-        firstName: decodedToken.firstName || '',
-        lastName: decodedToken.lastName || '',
-        email: decodedToken.email || '',
-      };
-    } catch (error) {
-      console.error('Error decoding token', error);
-      this.toastr.error('Session expired or invalid token. Please log in again.', 'Error');
-      return null;
-    }
+  public getCurrentUser(): Observable<Result<CurrentUserResponse>> {
+    return this.httpService.get<Result<CurrentUserResponse>>(
+      `${this.baseApiUrl}/current-user`,
+      { withCredentials: true }
+    );
   }
 
+  public verifySession(): Observable<boolean> {
+    const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
+    if (isAuthenticated) return of(true);
+    return this.httpService.get<Result<void>>(`${this.baseApiUrl}/verify-session`, { withCredentials: true })
+      .pipe(
+        map(result => {
+          if (result.isSuccess) {
+            localStorage.setItem("isAuthenticated", "true");
+            return true;
+          } else {
+            localStorage.removeItem("isAuthenticated");
+            return false;
+          }
+        }),
+        catchError(() => {
+          localStorage.removeItem("isAuthenticated");
+          return of(false);
+        })
+      );
+  }
+  
   public logout(): void {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
+    this.httpService.post(`${this.baseApiUrl}/logout`, {}, { withCredentials: true }).subscribe({
+      next: () => {
+        localStorage.removeItem("isAuthenticated");  
+        document.cookie = "accessToken=; Max-Age=0; path=/;";
+        document.cookie = "refreshToken=; Max-Age=0; path=/;";
+        if (!window.location.href.includes("/login") && !window.location.href.includes("/signup")){
+          this.toastr.info("Successfully logged out. Redirecting to login page.");
+        }
+        this.router.navigate(['/login']);
+      },
+      error: () => {
+        localStorage.removeItem("isAuthenticated");  
+        this.router.navigate(['/login']);
+      }
+    });
   }
 
   forgotPassword(email: string) : Observable<Result<void>>{
-    return this.httpService.put<Result<void>>(`${this.baseApiUrl}/forgot-password`, {email: email});
-  }
-  
-  public getAccessToken(): string | null {
-    return localStorage.getItem('accessToken');
+    return this.httpService.put<Result<void>>(`${this.baseApiUrl}/forgot-password`, {email: email}, { withCredentials: true });
   }
 }

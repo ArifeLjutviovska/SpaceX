@@ -1,32 +1,36 @@
-import { Injectable } from '@angular/core';
-import { CanActivate, Router, ActivatedRouteSnapshot } from '@angular/router';
+import { Injectable, inject } from '@angular/core';
+import { CanActivate, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { ToastrService } from 'ngx-toastr';
+import { Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router, private toastr: ToastrService) {}
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
-  canActivate(route: ActivatedRouteSnapshot): boolean {
-    const token = this.authService.getAccessToken();
-    const isAuthRoute = route.routeConfig?.path === 'login' || route.routeConfig?.path === 'signup';
+  canActivate(): Observable<boolean> {
+    const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
 
-    if (token) {
-      if (isAuthRoute) {
-        this.toastr.info("You are already logged in.", 'Info');
-        this.router.navigate(['/dashboard']); 
-        return false;
-      }
-      return true;
-    } else {
-      if (!isAuthRoute) {
-        this.toastr.error("Please log in first!");
-        this.router.navigate(['/login']); 
-        return false;
-      }
-      return true; 
+    if (isAuthenticated) {
+      return of(true);
     }
+
+    return this.authService.verifySession().pipe(
+      map(isAuthenticated => {
+        if (isAuthenticated) {
+          return true;
+        } else {
+          this.router.navigate(['/login']);
+          return false;
+        }
+      }),
+      catchError(() => {
+        this.router.navigate(['/login']);
+        return of(false);
+      })
+    );
   }
 }

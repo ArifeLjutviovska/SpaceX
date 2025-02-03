@@ -6,7 +6,6 @@
     using SpacexServer.Api.Commands.Users;
     using SpacexServer.Api.Common.Interfaces;
     using SpacexServer.Api.Common.Models;
-    using SpacexServer.Api.Contracts.RefreshTokens.Requests;
     using SpacexServer.Api.Contracts.Users.Requests;
     using SpacexServer.Api.Contracts.Users.Responses;
     using Swashbuckle.AspNetCore.Annotations;
@@ -46,12 +45,38 @@
         /// <returns>JWT access and refresh tokens if authentication is successful.</returns>
         [HttpPost("login")]
         [SwaggerOperation(Summary = "Logs in a user and returns JWT tokens.")]
-        [SwaggerResponse((int)HttpStatusCode.OK, "Login successful.", typeof(Result<LoginUserResponse>))]
+        [SwaggerResponse((int)HttpStatusCode.OK, "Login successful.", typeof(Result))]
         [SwaggerResponse((int)HttpStatusCode.Unauthorized, "Invalid email or password.")]
         public async Task<IActionResult> LoginUserAsync([FromBody] LoginRequest request)
         {
             Result<LoginUserResponse> result = await _commandDispatcher.ExecuteAsync(new LoginUserCommand(request));
-            return OkOrError(result);
+
+            if (result.IsFailure)
+            {
+                return OkOrError(Result.Unauthorized("Invalid email or password."));
+            }
+           
+            var accessTokenCookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = false,
+                SameSite = SameSiteMode.Strict,
+                Path = "/",
+                Expires = DateTime.UtcNow.AddMinutes(15)
+            };
+
+            var refreshTokenCookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = false,
+                SameSite = SameSiteMode.Strict,
+                Path = "/",
+                Expires = DateTime.UtcNow.AddDays(7)
+            };
+
+            Response.Cookies.Append("accessToken", result.Value.AccessToken, accessTokenCookieOptions);
+            Response.Cookies.Append("refreshToken", result.Value.RefreshToken, refreshTokenCookieOptions);
+            return OkOrError(Result.Ok());
         }
 
         /// <summary>
@@ -63,10 +88,34 @@
         [SwaggerOperation(Summary = "Refreshes an expired JWT access token.")]
         [SwaggerResponse((int)HttpStatusCode.OK, "Token refreshed successfully.", typeof(Result<LoginUserResponse>))]
         [SwaggerResponse((int)HttpStatusCode.Unauthorized, "Invalid or expired refresh token.")]
-        public async Task<IActionResult> RefreshTokenAsync([FromBody] RefreshTokenRequest request)
+        public async Task<IActionResult> RefreshToken()
         {
-            Result<LoginUserResponse> result = await _commandDispatcher.ExecuteAsync(new RefreshTokenCommand(request));
-            return OkOrError(result);
+            string? refreshToken = Request.Cookies["RefreshToken"];
+
+            if (string.IsNullOrEmpty(refreshToken))
+            {
+                return OkOrError(Result.Unauthorized("No refresh token found."));
+            }
+
+            Result<LoginUserResponse> result = await _commandDispatcher.ExecuteAsync(new RefreshTokenCommand(new(){ RefreshToken = refreshToken }));
+
+            if (!result.IsSuccess)
+            {
+                return OkOrError(Result.Unauthorized("No refresh token found."));
+            }
+
+            var newAccessTokenCookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = false,
+                SameSite = SameSiteMode.Strict,
+                Path = "/",
+                Expires = DateTime.UtcNow.AddMinutes(15)
+            };
+
+            Response.Cookies.Append("accessToken", result.Value.AccessToken, newAccessTokenCookieOptions);
+
+            return Ok(result);
         }
 
         /// <summary>
@@ -128,5 +177,53 @@
 
             return OkOrError(result);
         }
+
+        [HttpPost("logout")]
+        [Authorize]
+        public IActionResult Logout()
+        {
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = false,
+                SameSite = SameSiteMode.Strict,
+                Path = "/",
+                Expires = DateTime.UtcNow.AddDays(-1)
+            };
+
+            Response.Cookies.Append("accessToken", "", cookieOptions);
+            Response.Cookies.Append("refreshToken", "", cookieOptions);
+
+            return Ok(Result.Ok("Logged out successfully."));
+        }
+
+        [HttpGet("current-user")]
+        [Authorize]
+        public IActionResult GetCurrentUser()
+        {
+            var user = new
+            {
+                FirstName = User.FindFirst("firstName")?.Value,
+                LastName = User.FindFirst("lastName")?.Value,
+                Email = User.FindFirst(ClaimTypes.Email)?.Value
+            };
+
+            return OkOrError(Result.Ok(user));
+        }
+
+        [HttpGet("verify-session")]
+        [Authorize]
+        public IActionResult VerifySession()
+        {
+            string? accessToken = Request.Cookies["accessToken"];
+
+            if (string.IsNullOrEmpty(accessToken))
+            {
+                return Unauthorized(Result.Failed("Session expired."));
+            }
+
+            return Ok(Result.Ok("Session is valid."));
+        }
+
     }
 }

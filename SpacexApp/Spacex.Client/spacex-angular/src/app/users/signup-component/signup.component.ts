@@ -79,27 +79,23 @@ export class SignupComponent {
       mergeMap((result: Result<void>) => {
         if (result.isSuccess) {
           this.showSuccess('Signup successful! Redirecting...');
-  
-          return this.authService.login({
-            email: request.email,
-            password: request.password
-          }).pipe(
-            mergeMap((loginResult: Result<LoginResponse>) => {
-              if (loginResult.isSuccess) {
-                setTimeout(() => this.router.navigate(['/dashboard']), 2000); 
-              } else {
-                this.showError(loginResult?.message || 'Login failed.');
-              }
-              return of(null);
-            })
-          );
+          return this.authService.login({ email: request.email, password: request.password });
         } else {
           this.showError(result?.message || 'Signup failed.');
-          return of(null);
+          throw new Error(result?.message || 'Signup failed.');
         }
       }),
+      mergeMap((loginResult: Result<void>) => {
+        if (loginResult.isSuccess) {
+          localStorage.setItem("isAuthenticated", "true"); 
+          setTimeout(() => this.router.navigate(['/dashboard/profile']), 2000);
+        } else {
+          this.showError(loginResult?.message || 'Authenticate user failed.');
+        }
+        return of(null);
+      }),
       catchError((error) => {
-        this.showError(error?.error?.message ?? error?.message ?? "Signup failed.");
+        this.showError(error?.message ?? "Authenticate user failed.");
         return of(null);
       })
     ).subscribe();
