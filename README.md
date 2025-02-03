@@ -74,23 +74,6 @@ You can test the application with these routes:
  - Frontend: http://localhost:4300
  - Backend API: http://localhost:7005
 
-##  API Endpoints
-
-| Method | Endpoint                            | Description                          |
-|--------|-------------------------------------|--------------------------------------|
-| `POST` | `/api/auth/signup`                 | Register a new user                 |
-| `POST` | `/api/auth/login`                  | Authenticate a user                 |
-| `POST` | `/api/auth/logout`                 | Logout the user                     |
-| `GET`  | `/api/auth/current-user`           | Get the current authenticated user  |
-| `PUT`  | `/api/auth/update-password`        | Update user password                |
-| `PUT`  | `/api/auth/forgot-password`        | Send password reset instructions    |
-| `PUT`  | `/api/auth/reset-password`         | Reset user password                 |
-| `POST` | `/api/auth/refresh-token`          | Refresh the access token            |
-| `GET`  | `/api/auth/verify-session`         | Check if user session is valid      |
-| `GET`  | `/api/spacex/latest-launches`      | Get latest SpaceX launches          |
-| `GET`  | `/api/spacex/upcoming-launches`    | Get upcoming launches               |
-| `GET`  | `/api/spacex/past-launches`        | Get past launches                   |
-
 
 
 
@@ -99,11 +82,8 @@ You can test the application with these routes:
 - Go to this link which is link of the one of the successfull Actions on theese repository: 👉 [GitHub Actions](https://github.com/ArifeLjutviovska/SpaceX/actions/runs/13117986904)
 - Scroll down to the Artifacts section and download env-file.zip.
 - Extract the .zip file to get the .env file. (***Note:** You need to be logged in to github in order to download the file)
-  ![image](https://github.com/user-attachments/assets/4773379c-ee21-439b-9b65-03541ca8e63a)
+  ![image](https://github.com/user-attachments/assets/4773379c-ee21-439b-9b65-03541ca8e63a)  
 
-
-
-  
 
 ### Troubleshooting
 ❌ **Error: "User Declined Directory Sharing"**
@@ -125,4 +105,25 @@ If you don’t want to enable file sharing:
 3. Run the docker containers:
    ```docker-compose up --build```
 🚀 After this, Docker should start successfully!
+
+
+
+
+
+##  API Endpoints
+
+| Method | Endpoint                            | Description                          |
+|--------|-------------------------------------|--------------------------------------|
+| `POST` | `/api/auth/signup`                 | Register a new user                 |
+| `POST` | `/api/auth/login`                  | Authenticate a user                 |
+| `POST` | `/api/auth/logout`                 | Logout the user                     |
+| `GET`  | `/api/auth/current-user`           | Get the current authenticated user  |
+| `PUT`  | `/api/auth/update-password`        | Update user password                |
+| `PUT`  | `/api/auth/forgot-password`        | Send password reset instructions    |
+| `PUT`  | `/api/auth/reset-password`         | Reset user password                 |
+| `POST` | `/api/auth/refresh-token`          | Refresh the access token            |
+| `GET`  | `/api/auth/verify-session`         | Check if user session is valid      |
+| `GET`  | `/api/spacex/latest-launches`      | Get latest SpaceX launches          |
+| `GET`  | `/api/spacex/upcoming-launches`    | Get upcoming launches               |
+| `GET`  | `/api/spacex/past-launches`        | Get past launches                   |
 
