@@ -100,14 +100,14 @@ If you are already on SpaceX/docker-compose folder on your terminal, just run th
 
 
 
-###  Steps to get environment file
+### 📌 Steps to get environment file
 - Go to this link which is link of the one of the successfull Actions on theese repository: 👉 [GitHub Actions](https://github.com/ArifeLjutviovska/SpaceX/actions/runs/13117986904)
 - Scroll down to the Artifacts section and download env-file.zip.
 - Extract the .zip file to get the .env file. (***Note:** You need to be logged in to github in order to download the file)
   ![image](https://github.com/user-attachments/assets/4773379c-ee21-439b-9b65-03541ca8e63a)  
 
 
-### Troubleshooting
+### 📌Troubleshooting
 ❌ **Error: "User Declined Directory Sharing"**
 If you see an error like this:
  ```Error response from daemon: user declined directory sharing path-to-project\SpaceX\docker-compose\spacex-db.sql```
