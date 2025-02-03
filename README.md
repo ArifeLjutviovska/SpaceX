@@ -45,9 +45,9 @@ Before cloning the repository, make sure you have the following installed:
 ###  Setup & Installation
   **1. Clone the Repository**
   Open terminal and go to the folder that  you want to clone the project on your local machine. And run the following command:
-      ```sh
-      git clone https://github.com/ArifeLjutviovska/SpaceX.git
-      ```
+     ```sh
+       git clone https://github.com/ArifeLjutviovska/SpaceX.git
+   ```
     
 
 ## **📌 Steps to Clone and Setup the Project**
