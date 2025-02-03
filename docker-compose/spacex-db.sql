@@ -42,12 +42,12 @@ BEGIN
 	CREATE TABLE [Spacex].[Users]
 	(
 		[Id]                       INT IDENTITY (1, 1) PRIMARY KEY NOT NULL, 
-		[CreatedOn]                DATETIME2(0)                    NOT NULL,
-		[DeletedOn]				   DATETIME2(0)						   NULL, 
-		[Email]					   NVARCHAR(75)					   NOT NULL UNIQUE, 
-		[FirstName]				   NVARCHAR(100)			       NOT NULL,
-		[LastName]				   NVARCHAR(100)                   NOT NULL,
-		[Password]                 NVARCHAR(50)                   NOT NULL 
+		[CreatedOn]                DATETIME2(0)  NOT NULL,
+		[DeletedOn]				   DATETIME2(0)    	 NULL, 
+		[Email]					   NVARCHAR(75)	 NOT NULL UNIQUE, 
+		[FirstName]				   NVARCHAR(100) NOT NULL,
+		[LastName]				   NVARCHAR(100) NOT NULL,
+		[Password]                 NVARCHAR(50)  NOT NULL 
 	);
     PRINT 'Table Spacex.Users created successfully.';
 END
@@ -75,11 +75,11 @@ IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'RefreshTokens' AND schema_
 BEGIN
     CREATE TABLE [Spacex].[RefreshTokens] (
         [Id]            INT IDENTITY (1,1) PRIMARY KEY NOT NULL,
-        [UserFk]        INT NOT NULL,
+        [UserFk]        INT           NOT NULL,
         [Token]         NVARCHAR(255) NOT NULL UNIQUE,
-        [ExpiresAt]     DATETIME2(0) NOT NULL,
-        [CreatedAt]     DATETIME2(0) NOT NULL DEFAULT GETUTCDATE(),
-        [RevokedAt]     DATETIME2(0) NULL,
+        [ExpiresAt]     DATETIME2(0)  NOT NULL,
+        [CreatedAt]     DATETIME2(0)  NOT NULL DEFAULT GETUTCDATE(),
+        [RevokedAt]     DATETIME2(0)      NULL,
         CONSTRAINT FK_RefreshTokens_Users FOREIGN KEY (UserFk) REFERENCES [Spacex].[Users](Id) ON DELETE CASCADE
     );
     PRINT 'Table Spacex.RefreshTokens created successfully.';
