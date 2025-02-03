@@ -126,7 +126,9 @@ If you are already on SpaceX/docker-compose folder on your terminal, just run th
  - Create  Database connection on SQL Server [click here](https://learn.microsoft.com/en-us/sql/relational-databases/databases/create-a-database?view=sql-server-ver16)
  - Modify **appsettings.json** which is in SpaceX/SpacexApp/SpacexServer.Api directory, change the connection string with your database connection string
  - Modify **TargetConnectionString** in Spacex.Database.SqlDb.xml, which is in SpaceX/SpacexApp/Spacex.Database folder
- - Publish the database with those options: 
+ - Publish the database with those options:
+
+   
    **a) Option 1:**
    
   If you have ```SqlPackage.exe``` installed, then execute the following command, replace "C:\path-to\Spacex.Database.SqlDb.xml" with the actual file path and replace SpacexDB with your database name:
